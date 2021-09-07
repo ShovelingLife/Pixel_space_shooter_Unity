@@ -96,7 +96,9 @@ public class Enemy_core : MonoBehaviour
         is_dead               = false;
         m_current_point_index = 0;
         StopCoroutine(IE_enemy_death());
-        Enemy_info_manager.instance.Delete_enemy_info(GetComponent<Enemy_core>());
+
+        if (GetComponent<Enemy_core>()) // Not null
+            Enemy_info_manager.instance.Delete_enemy_info(GetComponent<Enemy_core>());
     }
 
     // Play sound

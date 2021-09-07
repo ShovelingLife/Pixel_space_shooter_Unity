@@ -161,7 +161,7 @@ public class Enemy_type_green_one : Enemy_core
     {
         for (int i = 0; i < m_max_bullet_count; i++)
         {
-            GameObject tmp_obj = Object_pooling.instance.enemy_bullet_pooling.Get_enemy_small_bullet_obj();
+            GameObject tmp_obj = Pooling_manager.instance.Get_obj(e_pooling_obj_type.ENEMY_SMALL_BULLET);
 
             if (tmp_obj != null)
             {

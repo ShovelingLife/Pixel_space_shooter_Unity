@@ -17,7 +17,6 @@ public class UI_manager : Singleton_local<UI_manager>
     bool              m_is_text_fading;
 
     // 플레이어 관련
-    Player_manager player_manager;
     public Text    player_score_txt;
     public Image   player_hp_img;
     public int     current_score = 0;
@@ -52,7 +51,6 @@ public class UI_manager : Singleton_local<UI_manager>
     void Init_settings()
     {
         game_start_txt      = game_start_text_obj.GetComponent<Text>();
-        player_manager      = GameObject.FindObjectOfType<Player_manager>();
         bullet_power_up_ui  = GetComponent<Bullet_power_up_UI>();
         bullet_speed_up_ui  = GetComponent<Bullet_speed_up_UI>();
         shield_power_up_ui  = GetComponent<Shield_power_up_UI>();
@@ -122,7 +120,7 @@ public class UI_manager : Singleton_local<UI_manager>
     {
         Player_stat_data player_stat_data = Stat_manager.instance.player_stat_data;
         player_score_txt.text             = "현재 점수 : " + current_score;
-        player_hp_img.fillAmount          = player_manager.current_hp_prop / player_stat_data.max_hp;
+        player_hp_img.fillAmount          = Player_manager.instance.current_hp_prop / player_stat_data.max_hp;
 
         // 파워업 레벨
         power_up_UI.bullet_power_up_txt.text  = Player_manager.instance.player_power_up_info.power_up_level.ToString();

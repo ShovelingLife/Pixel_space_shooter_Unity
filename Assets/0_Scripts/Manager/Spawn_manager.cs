@@ -27,13 +27,13 @@ public class Spawn_manager : Singleton_local<Spawn_manager>
     //int m_test_count = 0;
 
     public Item_spawn_info item_spawn_info;
-    float m_item_spawn_time = 10f;
+    float m_item_spawn_time = 1f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(IE_spawn_player_power_up_items());
+        StartCoroutine(IE_spawn_player_power_up_items());
         StartCoroutine(IE_spawn_first_monsters());
     }
 
@@ -46,15 +46,21 @@ public class Spawn_manager : Singleton_local<Spawn_manager>
     // A function that spawns player power up items
     IEnumerator IE_spawn_player_power_up_items()
     {
-        Player_power_up_pooling player_power_up_pooling = Object_pooling.instance.player_power_up_pooling;
-        
+        e_pooling_obj_type[] pooling_obj_type_arr = new e_pooling_obj_type[]
+        {
+            e_pooling_obj_type.PLAYER_HEALTH,
+            e_pooling_obj_type.PLAYER_BULLET_POWER_UP,
+            e_pooling_obj_type.PLAYER_BULLET_SPEED_UP,
+            e_pooling_obj_type.PLAYER_MISSILE_POWER_UP,
+            e_pooling_obj_type.PLAYER_SHIELD
+        };
         while (true)
         {
-            GameObject tmp_obj = player_power_up_pooling.Get_player_power_up_item();
-            Vector3    tmp_pos = player_power_up_pooling[Global.Rand(0, Global.power_up_item_array_index)];
+            //Debug.Log(pooling_obj_type_arr[Global.Rand(0, Global.power_up_item_array_index)]);
+            GameObject tmp_obj = Pooling_manager.instance.Get_obj(pooling_obj_type_arr[Global.Rand(0, Global.power_up_item_array_index)]);
+            Vector3    tmp_pos = Pooling_manager.instance.player_power_up_pooling_data[Global.Rand(0, Global.power_up_position_array_index)];
 
             tmp_obj.transform.localPosition = tmp_pos;
-            tmp_obj.SetActive(true);
             yield return new WaitForSeconds(m_item_spawn_time); // 10 seconds
         }
     }
@@ -67,7 +73,7 @@ public class Spawn_manager : Singleton_local<Spawn_manager>
             if (!m_is_first_time) 
                 yield return new WaitForSeconds(2.5f);
 
-            GameObject tmp_obj = Object_pooling.instance.enemy_pooling.Get_first_enemy_obj();
+            GameObject tmp_obj = Pooling_manager.instance.Get_obj(e_pooling_obj_type.ENEMY_GREEN_TYPE_ONE);
             int rand_pos_arr_index = UnityEngine.Random.Range(0, 4);
 
             if (tmp_obj != null)

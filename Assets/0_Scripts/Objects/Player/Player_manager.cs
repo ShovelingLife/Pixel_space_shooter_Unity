@@ -396,7 +396,7 @@ public class Player_manager : Singleton_local<Player_manager>
                 if (i == player_stat_data.max_missile_level) 
                     return;
 
-                missile_obj_arr[i] = Object_pooling.instance.player_bullet_pooling.Get_player_missile_obj();
+                missile_obj_arr[i] = Pooling_manager.instance.Get_obj(e_pooling_obj_type.PLAYER_MISSILE);
                 Player_missile player_missile = missile_obj_arr[i].GetComponent<Player_missile>();
 
                 if (missile_obj_arr[i] != null)
@@ -443,7 +443,7 @@ public class Player_manager : Singleton_local<Player_manager>
             if (i == player_stat_data.max_power_up_level) 
                 return;
 
-            bullet_obj_arr[i] = Object_pooling.instance.player_bullet_pooling.Get_player_bullet_obj();
+            bullet_obj_arr[i] = Pooling_manager.instance.Get_obj(e_pooling_obj_type.PLAYER_BULLET);
 
             if (bullet_obj_arr[i] != null)
             {

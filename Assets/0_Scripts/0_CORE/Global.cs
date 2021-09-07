@@ -29,7 +29,8 @@ public class Global
     readonly public static float default_power_up_ui_time = 0.05f;
 
     // Player variables
-    readonly public static int power_up_item_array_index = 26;
+    readonly public static int power_up_item_array_index = 5;
+    readonly public static int power_up_position_array_index = 26;
 
 
     // Returns random int
