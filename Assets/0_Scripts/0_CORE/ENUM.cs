@@ -1,5 +1,25 @@
-﻿// Missile moving type
-public enum e_missile_direction_type
+﻿// 기즈모 색상 종류
+public enum e_gizmo_color_type
+{
+    WHITE,
+    BLACK,
+    GRAY,
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    CYAN,
+    MAGENTA
+};
+
+public enum e_path_type
+{
+    SINGLE_CURVE=4,
+    DOUBLE_CURVE=8
+}
+
+// Missile moving type
+public enum e_missile_direction
 {
     UP,
     DOWN,
@@ -15,6 +35,16 @@ public enum e_plane_state
     RIGHT,
     LEFT
 }
+
+// 적 비행기 웨이포인트
+public enum e_enemy_waypoint
+{
+    FIRST,
+    SECOND,
+    THIRD,
+    FOURTH,
+    FIFTH
+};
 
 // Log screen class transform type
 public enum e_class_transform_type
@@ -63,3 +93,13 @@ public enum e_boss_pattern_type
     FOURTH,
     FIFTH
 }
+
+// 일반 적 경로
+public enum e_enemy_path_type
+{
+    FIRST,
+    SECOND,
+    THIRD,
+    FOURTH,
+    FIFTH
+};

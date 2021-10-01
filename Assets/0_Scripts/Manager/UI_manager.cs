@@ -134,24 +134,20 @@ public class UI_manager : Singleton_local<UI_manager>
 public class Power_up_UI
 {
     [Header("플레이어 탄알 공격력 증가")]
-    // 공격력 증가 UI
     public GameObject original_bullet_power_up_obj;
     public GameObject timer_bullet_power_up_obj;
     public Text bullet_power_up_txt;
 
-    // 공격 속도 증가 UI
     [Header("플레이어 탄알 공격 속도 증가")]
     public GameObject original_bullet_speed_up_obj;
     public GameObject timer_bullet_speed_up_obj;
     public Text bullet_speed_up_txt;
 
-    // 미사일 UI
     [Header("플레이어 유도 미사일 생성")]
     public GameObject original_missile_obj;
     public GameObject timer_missile_obj;
     public Text missile_power_up_txt;
 
-    // 보호막 UI
     [Header("플레이어 보호막 생성")]
     public GameObject original_shield_obj;
     public GameObject timer_shield_obj;

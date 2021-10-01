@@ -15,26 +15,26 @@ public class Item_spawn_info
 [Serializable]
 public class Monster_spawn_pos
 {
-    public List<Vector3> spawn_pos_list;
+    public List<Vector3> spawn_pos_list = new List<Vector3>();
 }
 
 public class Spawn_manager : Singleton_local<Spawn_manager>
 {
     // 몬스터 소환 위치 관련
     [Header("몬스터 소환 위치")]
-    public Monster_spawn_pos monster_spawn_pos;
+    public Monster_spawn_pos monster_spawn_pos = new Monster_spawn_pos();
            bool              m_is_first_time;
     //int m_test_count = 0;
 
-    public Item_spawn_info item_spawn_info;
+    public Item_spawn_info item_spawn_info = new Item_spawn_info();
     float m_item_spawn_time = 1f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(IE_spawn_player_power_up_items());
-        StartCoroutine(IE_spawn_first_monsters());
+        //StartCoroutine(IE_spawn_player_power_up_items());
+        //StartCoroutine(IE_spawn_first_monsters());
     }
 
     // Update is called once per frame
@@ -74,11 +74,9 @@ public class Spawn_manager : Singleton_local<Spawn_manager>
                 yield return new WaitForSeconds(2.5f);
 
             GameObject tmp_obj = Pooling_manager.instance.Get_obj(e_pooling_obj_type.ENEMY_GREEN_TYPE_ONE);
-            int rand_pos_arr_index = UnityEngine.Random.Range(0, 4);
 
             if (tmp_obj != null)
             {
-                tmp_obj.transform.position = monster_spawn_pos.spawn_pos_list[0];
                 tmp_obj.GetComponent<SpriteRenderer>().color = Global.original_color;
                 tmp_obj.SetActive(true);
             }

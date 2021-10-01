@@ -11,8 +11,8 @@ public class Log_screen_manager : Singleton_global<Log_screen_manager>
     Queue<string>  log_text_queue = new Queue<string>();
     string         m_log_text;
     float          m_current_time = 0f;
-    readonly float m_timer = 1f;
-    int            m_count = 0;
+    readonly float m_timer        = 1f;
+    int            m_count        = 0;
 
 
     void Update()
@@ -40,10 +40,9 @@ public class Log_screen_manager : Singleton_global<Log_screen_manager>
     // Print log
     void Show_log()
     {
-        while(log_text_queue.Count > 0)
-        {
-            m_log_text += log_text_queue.Dequeue() + "\n";
-        }
+        while (log_text_queue.Count > 0)
+               m_log_text += log_text_queue.Dequeue() + "\n";
+
         log.text = m_log_text;
     }
 

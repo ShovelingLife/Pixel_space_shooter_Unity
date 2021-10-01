@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Global
 {
+    // 기즈모 색상
+    readonly public static Dictionary<e_gizmo_color_type, Color> d_gizmo_color = new Dictionary<e_gizmo_color_type, Color>
+    {
+        {e_gizmo_color_type.WHITE,  Color.white },  {e_gizmo_color_type.BLACK, Color.black }, {e_gizmo_color_type.GRAY,    Color.gray },
+        {e_gizmo_color_type.RED,    Color.red },    {e_gizmo_color_type.GREEN, Color.green }, {e_gizmo_color_type.BLUE,    Color.blue },
+        {e_gizmo_color_type.YELLOW, Color.yellow }, {e_gizmo_color_type.CYAN,  Color.cyan },  {e_gizmo_color_type.MAGENTA, Color.magenta },
+    };
+
     // 색상
     readonly public static Color original_color    = new Color(255, 255, 255, 255);
     readonly public static Color sprite_fade_color = new Color(255, 255, 255, 0);
@@ -29,7 +37,7 @@ public class Global
     readonly public static float default_power_up_ui_time = 0.05f;
 
     // Player variables
-    readonly public static int power_up_item_array_index = 5;
+    readonly public static int power_up_item_array_index     = 5;
     readonly public static int power_up_position_array_index = 26;
 
 
