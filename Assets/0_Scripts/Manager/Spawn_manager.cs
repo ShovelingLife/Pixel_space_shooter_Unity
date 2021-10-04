@@ -12,38 +12,18 @@ public class Item_spawn_info
     public int player_shield_quantity;
 };
 
-[Serializable]
-public class Monster_spawn_pos
-{
-    public List<Vector3> spawn_pos_list = new List<Vector3>();
-}
-
 public class Spawn_manager : Singleton_local<Spawn_manager>
 {
-    // 몬스터 소환 위치 관련
-    [Header("몬스터 소환 위치")]
-    public Monster_spawn_pos monster_spawn_pos = new Monster_spawn_pos();
-           bool              m_is_first_time;
-    //int m_test_count = 0;
-
-    public Item_spawn_info item_spawn_info = new Item_spawn_info();
+    public Item_spawn_info item_spawn_info;
     float m_item_spawn_time = 1f;
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(IE_spawn_player_power_up_items());
-        //StartCoroutine(IE_spawn_first_monsters());
+        //StartCoroutine(IE_spawn_player_power_up_items());\
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    // A function that spawns player power up items
+    // 아이템을 소환해줌
     IEnumerator IE_spawn_player_power_up_items()
     {
         e_pooling_obj_type[] pooling_obj_type_arr = new e_pooling_obj_type[]
@@ -65,23 +45,32 @@ public class Spawn_manager : Singleton_local<Spawn_manager>
         }
     }
 
-    // 첫 적을 소환해주는 함수
-    IEnumerator IE_spawn_first_monsters()
+    // 적을 소환해줌
+    public IEnumerator IE_spawn_monsters(Enemy_core[] _a_enemy)
     {
-        while (true)
+        Enemy_path before_path = _a_enemy[0].path;
+        Enemy_path after_path  = null;
+
+        before_path.gameObject.SetActive(true);
+
+        for (int i = 0; i < _a_enemy.Length; i++)
         {
-            if (!m_is_first_time) 
-                yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(_a_enemy[i].spawn_time);
 
-            GameObject tmp_obj = Pooling_manager.instance.Get_obj(e_pooling_obj_type.ENEMY_GREEN_TYPE_ONE);
+            after_path = _a_enemy[i].path;
 
-            if (tmp_obj != null)
+            if (_a_enemy[i] != null)
+                _a_enemy[i].is_ready = true;
+
+            // 경로 변경
+            if(before_path != after_path)
             {
-                tmp_obj.GetComponent<SpriteRenderer>().color = Global.original_color;
-                tmp_obj.SetActive(true);
+                before_path.gameObject.SetActive(false);
+                after_path.gameObject.SetActive(true);
             }
-            m_is_first_time = true;
-            yield return new WaitForSeconds(5f); //5f
         }
-    }
+        yield return new WaitForSeconds(10f);
+        Enemy_info_manager.instance.Turn_off_all_paths();
+        Level_manager.instance.Run_current_level();
+    } 
 }

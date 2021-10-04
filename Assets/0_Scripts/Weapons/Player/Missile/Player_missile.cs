@@ -11,9 +11,9 @@ public class Player_missile : MonoBehaviour
     [SerializeField] bool m_is_another_missile = false;
 
     // ------- Prevent nested missiles -------
-    Vector2 m_missile_detect_ray_pos;
+    Vector2      m_missile_detect_ray_pos;
     RaycastHit2D m_another_missile_hit;
-    int m_another_missile_layermask;
+    int          m_another_missile_layermask;
 
     // IDLE 관련
     public string current_direction;
@@ -22,6 +22,7 @@ public class Player_missile : MonoBehaviour
 
     // ------- Enemy variables -------
     public Enemy_core     enemy_core;
+
 
     private void Start()
     {

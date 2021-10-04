@@ -1,22 +1,4 @@
-﻿// 기즈모 색상 종류
-public enum e_gizmo_color_type
-{
-    WHITE,
-    BLACK,
-    GRAY,
-    RED,
-    GREEN,
-    BLUE,
-    YELLOW,
-    CYAN,
-    MAGENTA
-};
-
-public enum e_path_type
-{
-    SINGLE_CURVE=4,
-    DOUBLE_CURVE=8
-}
+﻿
 
 // Missile moving type
 public enum e_missile_direction
@@ -33,7 +15,8 @@ public enum e_plane_state
 {
     IDLE,
     RIGHT,
-    LEFT
+    LEFT,
+    SHOOTING
 }
 
 // 적 비행기 웨이포인트

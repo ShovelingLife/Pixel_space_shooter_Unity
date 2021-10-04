@@ -6,9 +6,10 @@ public class Parallax_scrolling : MonoBehaviour
 {
     // 배경화면 오브젝트
     public GameObject background_img_obj;
+
     // 시작 지점과 끝
-    Vector3 m_start_pos = Vector3.zero;
-    Vector3 m_end_pos = new Vector3(0f, -1920f, 0f);
+    Vector3      m_start_pos = Vector3.zero;
+    Vector3      m_end_pos   = new Vector3(0f, -1920f, 0f);
     public float scrolling_speed;
 
     void Update()

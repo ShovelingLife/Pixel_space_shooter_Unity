@@ -12,6 +12,7 @@ TagManager:
   - Dead_enemy
   - Player_missile
   - Boss
+  - Path_wall
   layers:
   - Default
   - TransparentFX

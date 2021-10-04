@@ -17,13 +17,13 @@ public class Shield_power_up_item : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (Player_manager.instance.player_power_up_info.shield_level > 0)
+            if (Stat_manager.instance.player_power_up_stat.shield_level > 0)
                 return;
 
             gameObject.SetActive(false);
-            Player_manager.instance.player_power_up_info.is_shield_created = true;
+            Stat_manager.instance.player_power_up_stat.is_shield_created = true;
             Audio_manager.instance.power_up_sound.Play_get_shield_item_sound();
-            Stat_manager.instance.power_up_stat.Set_shield_power_up_time();
+            Stat_manager.instance.player_power_up_stat.Set_shield_power_up_time();
             UI_manager.instance.shield_power_up_ui.Turn_on_shield_power_up_UI();
         }
     }
@@ -34,8 +34,8 @@ public class Shield_power_up_item : MonoBehaviour
         Vector3 current_pos         = this.transform.position;
         Quaternion current_rotation = this.transform.rotation;
 
-        current_pos.y                -= Stat_manager.instance.power_up_stat.shield_power_up_data.power_up_fall_speed * Time.deltaTime;
-        m_rotation_pos.x             += Stat_manager.instance.power_up_stat.shield_power_up_data.rotate_degree * Time.deltaTime;
+        current_pos.y                -= Stat_manager.instance.player_power_up_stat.shield_power_up_data.power_up_fall_speed * Time.deltaTime;
+        m_rotation_pos.x             += Stat_manager.instance.player_power_up_stat.shield_power_up_data.rotate_degree * Time.deltaTime;
         current_rotation.eulerAngles = m_rotation_pos;
         this.transform.rotation      = current_rotation;
         this.transform.position      = current_pos;

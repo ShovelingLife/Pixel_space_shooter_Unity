@@ -100,10 +100,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c61e0b9f2e9f64face02d9192c5863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plane_sprite_arr: []
+  path: {fileID: 0}
+  waypoint: 0
+  spawn_time: 0
+  a_plane_sprite:
+  - {fileID: 21300000, guid: 3efda2ef01bdac84eb137849d71ef906, type: 3}
+  - {fileID: 21300000, guid: edc111e2611dba640ada496ac2661a8f, type: 3}
+  - {fileID: 21300000, guid: edc111e2611dba640ada496ac2661a8f, type: 3}
   is_dead: 0
-  is_targeted: 0
-  is_test: 0
+  is_ready: 0
 --- !u!114 &77470437292595220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,13 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d55448f0e972aa46983bad841460e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plane_sprite_arr:
-  - {fileID: 21300000, guid: 3efda2ef01bdac84eb137849d71ef906, type: 3}
-  - {fileID: 21300000, guid: f8fc48c2a20003c4fa1f98db6bb777e2, type: 3}
-  - {fileID: 21300000, guid: edc111e2611dba640ada496ac2661a8f, type: 3}
+  path: {fileID: 0}
+  waypoint: 0
+  spawn_time: 0
+  a_plane_sprite: []
   is_dead: 0
-  is_targeted: 0
-  is_test: 0
+  is_ready: 0
 --- !u!114 &77470437292595221
 MonoBehaviour:
   m_ObjectHideFlags: 0

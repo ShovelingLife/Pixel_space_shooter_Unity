@@ -45,7 +45,7 @@ public class Player_missile_idle : MonoBehaviour
     void No_enemy()
     {
         Vector2 current_pos     = transform.localPosition;
-        current_pos.y           += Stat_manager.instance.power_up_stat.missile_power_up_data.missile_speed * Time.deltaTime;
+        current_pos.y           += Stat_manager.instance.player_power_up_stat.missile_power_up_data.missile_speed * Time.deltaTime;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         transform.localPosition = current_pos;
     }

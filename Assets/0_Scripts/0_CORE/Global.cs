@@ -25,7 +25,7 @@ public class Global
 
     // 회전
     readonly public static Quaternion zero_rotation = new Quaternion();
-    readonly public static Quaternion half_rotation = new Quaternion(0f,180f,0f,0f);
+    readonly public static Quaternion half_rotation = new Quaternion(0f,-180f,0f,0f);
 
     // Z축 회전
     readonly public static Vector3 left_z_rotation  = new Vector3(0f, 0f, 90f);
