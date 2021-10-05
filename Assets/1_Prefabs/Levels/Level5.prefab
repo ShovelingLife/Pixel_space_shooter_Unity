@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4006689752957467741
+--- !u!1 &7430108154735306383
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4006689752957467738}
-  - component: {fileID: 4006689752957467739}
+  - component: {fileID: 1764779114991094373}
+  - component: {fileID: 5755867964727573318}
   m_Layer: 0
-  m_Name: Level_manager
+  m_Name: Level5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4006689752957467738
+--- !u!4 &1764779114991094373
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4006689752957467741}
+  m_GameObject: {fileID: 7430108154735306383}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.745378, y: 10.296764, z: -0.28382158}
+  m_LocalPosition: {x: 1.7124157, y: 20.240416, z: -3.6928272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4006689752957467739
+--- !u!114 &5755867964727573318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4006689752957467741}
+  m_GameObject: {fileID: 7430108154735306383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 228a9e2296e7c49498880bf894999dbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 735a6678c3f4f7c49aa9a63e8f3d8dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a_pooling_obj: 0700000008000000040000000b0000000d0000000a000000
-  a_obj_quantity: 0a0000000f000000140000000a0000000a0000000a000000
-  core: {fileID: 0}
-  current_level: 1
+  a_obj_type: 000000000000000000000000000000000000000000000000
+  a_obj_quantity: 000000000000000000000000000000000000000000000000
+  count: 0
+  is_finished: 0

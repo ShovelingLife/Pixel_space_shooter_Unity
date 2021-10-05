@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_item_core : MonoBehaviour
+public class Medium_meteorite : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

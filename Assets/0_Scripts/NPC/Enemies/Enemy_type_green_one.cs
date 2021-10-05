@@ -122,7 +122,7 @@ public class Enemy_type_green_one : Enemy_core
     {
         for (int i = 0; i < m_max_bullet_count; i++)
         {
-            GameObject tmp_obj = Pooling_manager.instance.Get_obj(e_pooling_obj_type.ENEMY_SMALL_BULLET);
+            GameObject tmp_obj = Pooling_manager.instance.Get_obj(typeof(Enemy_small_bullet));
 
             if (tmp_obj != null)
             {
@@ -132,6 +132,7 @@ public class Enemy_type_green_one : Enemy_core
             }
             yield return new WaitForSeconds(1f);
         }
+        yield return null;
     }
 
     // 스프라잇 변경

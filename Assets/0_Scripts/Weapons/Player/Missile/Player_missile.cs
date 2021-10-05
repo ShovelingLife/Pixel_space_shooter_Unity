@@ -72,9 +72,15 @@ public class Player_missile : MonoBehaviour
     // 미사일 목표물 지정
     void Set_target()
     {
-        if (enemy_core &&
-            enemy_core.isActiveAndEnabled)
-            Set_attack_property();
+        if (enemy_core)
+        {
+            // need fix
+            float distance = Vector3.Distance(transform.localPosition, enemy_core.transform.localPosition);
+            Log_screen_manager.instance.Insert_log($"미사일과 적의 거리 차이 : {distance}");
+
+            if(distance<=20f)
+                Set_attack_property();
+        }
 
         else
             Set_idle_property();

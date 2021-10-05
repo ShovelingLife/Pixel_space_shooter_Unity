@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pooling_manager : Singleton_local<Pooling_manager>
 {
-    Dictionary<e_pooling_obj_type, List<GameObject>> md_obj_list = new Dictionary<e_pooling_obj_type, List<GameObject>>();
+    Dictionary<Type, List<GameObject>> md_obj_list = new Dictionary<Type, List<GameObject>>();
 
     [Header("Player_pooling_data")]
     public Player_bullet_pooling_data   player_bullet_pooling_data;
@@ -26,8 +26,27 @@ public class Pooling_manager : Singleton_local<Pooling_manager>
     // 클래스 변수 초기화
     public void Init_class_members()
     {
-        for (int i = 0; i < (int)e_pooling_obj_type.MAX; i++)
-             md_obj_list[(e_pooling_obj_type)i] = new List<GameObject>();
+        // 플레이어 무기
+        md_obj_list[typeof(Player_bullet)] = new List<GameObject>();
+        md_obj_list[typeof(Player_missile)] = new List<GameObject>();
+
+        // 플레이어 아이템
+        md_obj_list[typeof(Health_restore_item)] = new List<GameObject>();
+        md_obj_list[typeof(Bullet_power_up_item)] = new List<GameObject>();
+        md_obj_list[typeof(Bullet_speed_up_item)] = new List<GameObject>();
+        md_obj_list[typeof(Missile_power_up_item)] = new List<GameObject>();
+        md_obj_list[typeof(Shield_power_up_item)] = new List<GameObject>();
+
+        // 운석 종류
+        md_obj_list[typeof(Big_meteorite)] = new List<GameObject>();
+        md_obj_list[typeof(Medium_meteorite)] = new List<GameObject>();
+        md_obj_list[typeof(Small_meteorite)] = new List<GameObject>();
+
+        // 적 종류
+        md_obj_list[typeof(Enemy_type_green_one)] = new List<GameObject>();
+
+        // 적 총알
+        md_obj_list[typeof(Enemy_small_bullet)] = new List<GameObject>();
 
         player_power_up_pooling_data.Init_values();
     }
@@ -51,12 +70,12 @@ public class Pooling_manager : Singleton_local<Pooling_manager>
             // Player bullet
             GameObject bullet_obj = GameObject.Instantiate(player_bullet_pooling_data.player_bullet_prefab, player_bullet_pooling_data.player_bullet_container, true);
             bullet_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_BULLET].Add(bullet_obj);
+            md_obj_list[typeof(Player_bullet)].Add(bullet_obj);
 
             // Player missile
             GameObject missile_obj = GameObject.Instantiate(player_bullet_pooling_data.player_missile_prefab, player_bullet_pooling_data.player_missile_container, true);
             missile_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_MISSILE].Add(missile_obj);
+            md_obj_list[typeof(Player_missile)].Add(missile_obj);
         }
     }
 
@@ -69,27 +88,27 @@ public class Pooling_manager : Singleton_local<Pooling_manager>
             // 체력 회복 아이템
             GameObject health_obj = Instantiate(player_power_up_pooling_data.health_prefab, player_power_up_pooling_data.health_container);
             health_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_HEALTH].Add(health_obj);
+            md_obj_list[typeof(Health_restore_item)].Add(health_obj);
 
             // 공격력 강화 아이템
             GameObject bullet_power_up_obj = Instantiate(player_power_up_pooling_data.bullet_power_up_prefab, player_power_up_pooling_data.bullet_power_up_container);
             bullet_power_up_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_BULLET_POWER_UP].Add(bullet_power_up_obj);
+            md_obj_list[typeof(Bullet_power_up_item)].Add(bullet_power_up_obj);
 
             // 공격 속도 증가 아이템
             GameObject bullet_speed_up_obj = Instantiate(player_power_up_pooling_data.bullet_speed_up_prefab, player_power_up_pooling_data.bullet_speed_up_container);
             bullet_speed_up_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_BULLET_SPEED_UP].Add(bullet_speed_up_obj);
+            md_obj_list[typeof(Bullet_speed_up_item)].Add(bullet_speed_up_obj);
 
             // 미사일 아이템
             GameObject missile_obj = Instantiate(player_power_up_pooling_data.missile_prefab, player_power_up_pooling_data.missile_container);
             missile_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_MISSILE_POWER_UP].Add(missile_obj);
+            md_obj_list[typeof(Missile_power_up_item)].Add(missile_obj);
 
             // 보호막 아이템
             GameObject shield_obj = Instantiate(player_power_up_pooling_data.shield_prefab, player_power_up_pooling_data.shield_container);
             shield_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.PLAYER_SHIELD].Add(shield_obj);
+            md_obj_list[typeof(Shield_power_up_item)].Add(shield_obj);
         }
     }
 
@@ -101,17 +120,17 @@ public class Pooling_manager : Singleton_local<Pooling_manager>
             // 소형 총알
             GameObject tmp_small_bullet_obj = Instantiate(enemy_bullet_pooling_data.small_enemy_bullet_prefab, enemy_bullet_pooling_data.small_enemy_bullet_container, true);
             tmp_small_bullet_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.ENEMY_SMALL_BULLET].Add(tmp_small_bullet_obj);
+            md_obj_list[typeof(Enemy_small_bullet)].Add(tmp_small_bullet_obj);
 
-            // 중형 총알
-            GameObject tmp_medium_bullet_obj = Instantiate(enemy_bullet_pooling_data.medium_enemy_bullet_prefab, enemy_bullet_pooling_data.medium_enemy_bullet_container, true);
-            tmp_medium_bullet_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.ENEMY_MEDIUM_BULLET].Add(tmp_medium_bullet_obj);
+            //// 중형 총알
+            //GameObject tmp_medium_bullet_obj = Instantiate(enemy_bullet_pooling_data.medium_enemy_bullet_prefab, enemy_bullet_pooling_data.medium_enemy_bullet_container, true);
+            //tmp_medium_bullet_obj.SetActive(false);
+            //md_obj_list[typeof(Shield_power_up_item)].Add(shield_obj);
 
-            // 대형 총알
-            GameObject tmp_big_bullet_obj = Instantiate(enemy_bullet_pooling_data.big_enemy_bullet_prefab, enemy_bullet_pooling_data.big_enemy_bullet_container, true);
-            tmp_big_bullet_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.ENEMY_BIG_BULLET].Add(tmp_medium_bullet_obj);
+            //// 대형 총알
+            //GameObject tmp_big_bullet_obj = Instantiate(enemy_bullet_pooling_data.big_enemy_bullet_prefab, enemy_bullet_pooling_data.big_enemy_bullet_container, true);
+            //tmp_big_bullet_obj.SetActive(false);
+            //md_obj_list[typeof(Shield_power_up_item)].Add(shield_obj);
         }
     }
 
@@ -123,7 +142,7 @@ public class Pooling_manager : Singleton_local<Pooling_manager>
             GameObject first_enemy_obj = Instantiate(enemy_pooling_data.first_normal_enemy_prefab, enemy_pooling_data.first_normal_enemy_container, true);
             first_enemy_obj.transform.localPosition = new Vector3(1000f, 1000f);
             first_enemy_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.ENEMY_GREEN_TYPE_ONE].Add(first_enemy_obj);
+            md_obj_list[typeof(Enemy_type_green_one)].Add(first_enemy_obj);
         }
     }
 
@@ -135,22 +154,22 @@ public class Pooling_manager : Singleton_local<Pooling_manager>
             // 작은 크기의 운석
             GameObject small_meteorite_obj = Instantiate(meteorite_pooling_data.small_meteorite_prefab, meteorite_pooling_data.small_meteorite_container);
             small_meteorite_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.SMALL_METEORITE].Add(small_meteorite_obj);
+            md_obj_list[typeof(Small_meteorite)].Add(small_meteorite_obj);
 
             // 중간 크기의 운석
             GameObject medium_meteorite_obj = Instantiate(meteorite_pooling_data.medium_meteorite_prefab, meteorite_pooling_data.medium_meteorite_container);
             medium_meteorite_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.MEDIUM_METEORITE].Add(medium_meteorite_obj);
+            md_obj_list[typeof(Medium_meteorite)].Add(medium_meteorite_obj);
 
             // 큰 크기의 운석
             GameObject big_meteorite_obj = Instantiate(meteorite_pooling_data.big_meteorite_prefab, meteorite_pooling_data.big_meteorite_container);
             big_meteorite_obj.SetActive(false);
-            md_obj_list[e_pooling_obj_type.BIG_METEORITE].Add(big_meteorite_obj);
+            md_obj_list[typeof(Big_meteorite)].Add(big_meteorite_obj);
         }
     }
 
     // Get pooling obj
-    public GameObject Get_obj(e_pooling_obj_type _obj_type)
+    public GameObject Get_obj(Type _obj_type)
     {
         foreach (var item in md_obj_list[_obj_type])
         {

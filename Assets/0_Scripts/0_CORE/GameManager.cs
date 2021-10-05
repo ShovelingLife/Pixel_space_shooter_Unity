@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
         // UI
         UI_manager.instance.Init();
 
+        // 아이템
+        StartCoroutine(Spawn_manager.instance.IE_spawn_player_power_up_items());
+
         // 레벨 
         Level_manager.instance.Init();
         Level_manager.instance.core.Init();

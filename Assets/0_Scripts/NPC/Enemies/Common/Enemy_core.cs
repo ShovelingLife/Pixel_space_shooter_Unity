@@ -33,6 +33,7 @@ public class Enemy_core : MonoBehaviour
     protected bool           m_play_sound = true;
     public    bool           is_dead;
     public    bool           is_ready;
+    public    bool           is_activated = false;
 
 
     protected virtual void OnEnable()

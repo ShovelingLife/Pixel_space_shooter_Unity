@@ -67,6 +67,18 @@ public enum e_pooling_obj_type
     MAX
 }
 
+// Level pooling
+public enum e_level_obj_type
+{
+    // Enemy Type
+    ENEMY_GREEN_TYPE_ONE,
+
+    // Meteorite types
+    BIG_METEORITE,
+    MEDIUM_METEORITE,
+    SMALL_METEORITE
+}
+
 // Boss enemy pattern type
 public enum e_boss_pattern_type
 {
