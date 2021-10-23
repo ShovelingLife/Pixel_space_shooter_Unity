@@ -27,7 +27,8 @@ public enum e_level_type
     SECOND,
     THIRD,
     FOURTH,
-    FIFTH
+    FIFTH,
+    BOSS
 };
 
 // 레벨 종류

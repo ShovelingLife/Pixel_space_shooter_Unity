@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77470437292595217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 150, y: 150, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 77470437785412299}
@@ -100,15 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c61e0b9f2e9f64face02d9192c5863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Index: 0
   path: {fileID: 0}
   waypoint: 0
   spawn_time: 0
-  a_plane_sprite:
+  bullet_shoot_time: 0
+  arr_plane_sprite:
   - {fileID: 21300000, guid: 3efda2ef01bdac84eb137849d71ef906, type: 3}
   - {fileID: 21300000, guid: edc111e2611dba640ada496ac2661a8f, type: 3}
   - {fileID: 21300000, guid: edc111e2611dba640ada496ac2661a8f, type: 3}
   is_dead: 0
   is_ready: 0
+  is_activated: 0
 --- !u!114 &77470437292595220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,12 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d55448f0e972aa46983bad841460e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Index: 0
   path: {fileID: 0}
   waypoint: 0
   spawn_time: 0
-  a_plane_sprite: []
+  bullet_shoot_time: 0
+  arr_plane_sprite: []
   is_dead: 0
   is_ready: 0
+  is_activated: 0
 --- !u!114 &77470437292595221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +188,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0071252882}
+  m_Offset: {x: -0.008844882, y: 0.0071252882}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -193,7 +199,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.7994433}
+  m_Size: {x: 0.98231024, y: 0.7994433}
   m_EdgeRadius: 0
 --- !u!50 &1200039799174889841
 Rigidbody2D:

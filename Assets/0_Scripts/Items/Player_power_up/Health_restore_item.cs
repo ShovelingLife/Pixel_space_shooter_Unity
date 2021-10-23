@@ -2,42 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health_restore_item : MonoBehaviour
+public class Health_restore_item : Power_up_item_core
 {
-    public Health_restore_data health_restore_data;
-    Vector3 m_rotation_pos = new Vector3();
-    public bool test;
-
-    private void Update()
+    protected override void Start()
     {
-        if (!test) 
-            Move_power_up_item();
+        // 아이템 변수 초기화
+        base.Start();
+        m_fall_speed    = Player_manager.instance.health_restore_data.power_up_fall_speed;
+        m_rotate_degree = Player_manager.instance.health_restore_data.rotate_degree;
+        m_type          = typeof(Health_restore_item);
+        m_parent        = transform.parent;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            if (Player_manager.instance.current_hp_prop < Player_manager.instance.player_stat_data.max_hp)
-                Player_manager.instance.current_hp_prop += health_restore_data.restore_health;
+            Player_manager player_manager = Player_manager.instance;
 
-            gameObject.SetActive(false);
+            if (player_manager.current_hp_prop < player_manager.player_stat_data.max_hp)
+                player_manager.current_hp_prop += player_manager.health_restore_data.restore_health;
+
             Audio_manager.instance.power_up_sound.Play_get_health_item_sound();
+            base.OnTriggerEnter2D(other);
         }
-    }
-
-    // 파워업 아이템 움직임
-    void Move_power_up_item()
-    {
-        Vector3 current_pos = this.transform.position;
-        Quaternion current_rotation = this.transform.rotation;
-
-        current_pos.y-=health_restore_data.power_up_fall_speed*Time.deltaTime;
-        m_rotation_pos.x += health_restore_data.rotate_degree * Time.deltaTime;
-        current_rotation.eulerAngles = m_rotation_pos;
-        this.transform.rotation = current_rotation;
-        this.transform.position = current_pos;
-
-        if (this.transform.position.y < -16.5f) gameObject.SetActive(false);
+        if (other.gameObject.name == "South_wall")
+            base.OnTriggerEnter2D(other);
     }
 }

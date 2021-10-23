@@ -29,6 +29,8 @@ public class UI_manager : Singleton_local<UI_manager>
     public Image   player_hp_img;
     public int     current_score = 0;
 
+    [Header("보스 몬스터")]
+    public GameObject boss_hp_obj;
 
     void Update()
     {
@@ -99,7 +101,8 @@ public class UI_manager : Singleton_local<UI_manager>
         Dictionary<e_level_type, string> d_level = new Dictionary<e_level_type, string>()
         {
             {e_level_type.END,"게임 종료" },        {e_level_type.FIRST,"첫번째 스테이지" },{e_level_type.SECOND,"두번째 스테이지" },
-            {e_level_type.THIRD,"세번째 스테이지" },{e_level_type.FOURTH,"네번째 스테이지" },{e_level_type.FIFTH,"다섯번째 스테이지" }
+            {e_level_type.THIRD,"세번째 스테이지" },{e_level_type.FOURTH,"네번째 스테이지" },{e_level_type.FIFTH,"다섯번째 스테이지" },
+            {e_level_type.BOSS,"보스 출몰" }
         };
         mtxt_game_start.text = d_level[_current_level];
         m_display_alert_text = true;

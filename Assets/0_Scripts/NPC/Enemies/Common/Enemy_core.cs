@@ -5,17 +5,23 @@ using UnityEngine;
 // Class that defines the core of each enemy
 public class Enemy_core : MonoBehaviour
 {
+
+    public int Index = 0;
+
     // Position variables
-    public Enemy_path path;
-    public e_enemy_waypoint waypoint;
-    public float      spawn_time;
-    protected float m_speed;
-    protected float m_range;
+    public    Enemy_path       path;
+    public    e_enemy_waypoint waypoint;
+    public    float            spawn_time;
+    protected float            m_speed;
+    protected float            m_range;
 
     // Plane information variables
     protected Low_enemy_stat_data m_low_enemy_stat_data;
     protected Transform           m_bullet_pos;
     protected float               m_hp;
+    protected float               m_current_shoot_time = 0f;
+    public    float               bullet_shoot_time = 0f;
+
     public float current_hp
     {
         get { return m_hp; }
@@ -23,7 +29,7 @@ public class Enemy_core : MonoBehaviour
     }
 
     // Plane effects variables
-    public    Sprite[]       a_plane_sprite;
+    public    Sprite[]       arr_plane_sprite;
     protected GameObject     m_explosion_effect_obj;
 
     // Another variables
@@ -36,6 +42,11 @@ public class Enemy_core : MonoBehaviour
     public    bool           is_activated = false;
 
 
+    protected virtual void Update()
+    {
+        //Enemy_attack();
+    }
+
     protected virtual void OnEnable()
     {
     }
@@ -46,27 +57,43 @@ public class Enemy_core : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        bool is_sound_on = false;
+        bool   is_sound_on  = false;
+        string collided_tag = other.gameObject.tag;
 
         if (!is_dead)
         {
-            if (other.gameObject.tag == "Shield")
+            if (collided_tag == "Shield")
             {
                 Player_manager.instance.Character_dmg_dealed("enemy_collision");
                 is_sound_on = true;
+                current_hp = 0f;
             }
-            else if (other.gameObject.tag == "Player_bullet")
+            else if (collided_tag == "Player_bullet")
             {
                 is_dead = true;
                 is_sound_on = true;
+
+                // 미사일로부터 공격받음
+                Player_missile player_missile = other.GetComponent<Player_missile>();
+
+                if (player_missile)
+                {
+                    player_missile.GetComponent<BoxCollider2D>().enabled = false;
+                    current_hp -= Stat_manager.instance.player_power_up_stat.missile_power_up_data.missile_dmg;
+                    player_missile.gameObject.SetActive(false);
+                }
+
+                else
+                    current_hp -= Player_manager.instance.player_bullet_data.bullet_dmg;
             }
-            else if (other.gameObject.tag == "Player")
+            else if (collided_tag == "Player")
             {
                 if (Player_manager.instance.GetComponent<SpriteRenderer>().color.a != 0)
                 {
                     Player_manager.instance.current_hp_prop -= Stat_manager.instance.enemy_stat_data.collision_dmg;
                     Player_manager.instance.Character_dmg_dealed("enemy_collision");
                     is_sound_on = true;
+                    current_hp = 0f;
                 }
             }
             if (is_sound_on)
@@ -88,10 +115,9 @@ public class Enemy_core : MonoBehaviour
         is_dead                 = false;
         is_ready                = false;
         transform.localPosition = new Vector3(1000f, 1000f);
-        StopCoroutine(IE_enemy_death());
+        StopAllCoroutines();
 
         Enemy_info_manager.instance.Delete_enemy_info(this);
-        gameObject.SetActive(false);
     }
 
     // Play sound
@@ -111,17 +137,33 @@ public class Enemy_core : MonoBehaviour
             Global.zero_rotation
         }; 
         transform.rotation           = a_tmp_quaternion[(int)_plane_state];
-        GetComponent<SpriteRenderer>().sprite = a_plane_sprite[(int)_plane_state];
+        GetComponent<SpriteRenderer>().sprite = arr_plane_sprite[(int)_plane_state];
+    }
+
+    // 적이 공격함
+    IEnumerator IE_enemy_attack()
+    {
+        while (true)
+        {
+            Enemy_info_manager inst = Enemy_info_manager.instance;
+            Transform tmp_trans = Object_pooling_manager.instance.Create_obj(typeof(Enemy_small_bullet), inst.small_bullet_obj.transform, inst.small_bullet_obj_container);
+            tmp_trans.position = m_bullet_pos.position;
+            Audio_manager.instance.enemy_sound.Play_enemy_small_laser_sound();
+            m_current_shoot_time = 0f;
+            yield return new WaitForSeconds(bullet_shoot_time);
+        }
     }
 
     // 죽음 코루틴
     protected virtual IEnumerator IE_enemy_death()
     {
+        GetComponent<BoxCollider2D>().enabled = false;
         yield return null;
     }
 
-    public virtual IEnumerator IE_enemy_shoot_bullet()
+    // 공격 코루틴 실행
+    public void Run_attack_coroutine()
     {
-        yield return null;
+        StartCoroutine(IE_enemy_attack());
     }
 }

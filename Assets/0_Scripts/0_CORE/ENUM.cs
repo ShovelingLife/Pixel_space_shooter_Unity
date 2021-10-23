@@ -79,6 +79,17 @@ public enum e_level_obj_type
     SMALL_METEORITE
 }
 
+// 스테이지 이벤트 타입
+public enum e_stage_event_type
+{
+    ITEM,
+    ENEMY,
+    BOSS_ENEMY,
+    METEORITE,
+    CLEAR,
+    MAX
+}
+
 // Boss enemy pattern type
 public enum e_boss_pattern_type
 {
@@ -86,7 +97,8 @@ public enum e_boss_pattern_type
     SECOND,
     THIRD,
     FOURTH,
-    FIFTH
+    FIFTH,
+    MAX
 }
 
 // 일반 적 경로

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Global
 {
     // 기즈모 색상
-    readonly public static Dictionary<e_gizmo_color_type, Color> d_gizmo_color = new Dictionary<e_gizmo_color_type, Color>
+    readonly public static Dictionary<e_gizmo_color_type, Color> dic_gizmo_color = new Dictionary<e_gizmo_color_type, Color>
     {
         {e_gizmo_color_type.WHITE,  Color.white },  {e_gizmo_color_type.BLACK, Color.black }, {e_gizmo_color_type.GRAY,    Color.gray },
         {e_gizmo_color_type.RED,    Color.red },    {e_gizmo_color_type.GREEN, Color.green }, {e_gizmo_color_type.BLUE,    Color.blue },

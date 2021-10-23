@@ -12,7 +12,7 @@ public class Enemy_type_green_one : Enemy_core
         Init();
     }
 
-    void Update()
+    protected override void Update()
     {
         if (!is_dead) // Not dead
             Enemy_action();
@@ -20,8 +20,7 @@ public class Enemy_type_green_one : Enemy_core
         else // Dead
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
-        //if (this.transform.localPosition == m_target_pos_arr[3])
-        //    gameObject.SetActive(false);
+        base.Update();
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
@@ -75,7 +74,7 @@ public class Enemy_type_green_one : Enemy_core
         GetComponent<SpriteRenderer>().color = Global.sprite_fade_color;
         yield return new WaitForSeconds(duration);
         m_explosion_effect_obj.SetActive(false);
-        gameObject.SetActive(false);
+        Object_pooling_manager.instance.Remove_obj(typeof(Enemy_type_green_one), transform);
         base.Reset_after_dead();
     }
 
@@ -94,8 +93,7 @@ public class Enemy_type_green_one : Enemy_core
 
             switch (waypoint)
             {
-                case e_enemy_waypoint.FIRST: transform.position = path.Get_first_path(m_range); break;
-
+                case e_enemy_waypoint.FIRST:  transform.position = path.Get_first_path(m_range); break;
                 case e_enemy_waypoint.SECOND: transform.position = path.Get_second_path(m_range); break;
 
                 case e_enemy_waypoint.THIRD:
@@ -116,29 +114,11 @@ public class Enemy_type_green_one : Enemy_core
     {
         this.transform.DOLocalMove(_target_pos, m_low_enemy_stat_data.move_speed);
     }
-   
-    // 총알 발사 코루틴
-    public override IEnumerator IE_enemy_shoot_bullet()
-    {
-        for (int i = 0; i < m_max_bullet_count; i++)
-        {
-            GameObject tmp_obj = Pooling_manager.instance.Get_obj(typeof(Enemy_small_bullet));
-
-            if (tmp_obj != null)
-            {
-                tmp_obj.transform.position = m_bullet_pos.position;
-                tmp_obj.SetActive(true);
-                Audio_manager.instance.enemy_sound.Play_enemy_small_laser_sound();
-            }
-            yield return new WaitForSeconds(1f);
-        }
-        yield return null;
-    }
 
     // 스프라잇 변경
     public void Change_sprite(e_plane_state _state)
     {
-        GetComponent<SpriteRenderer>().sprite = a_plane_sprite[(int)_state];
+        GetComponent<SpriteRenderer>().sprite = arr_plane_sprite[(int)_state];
     }
 
     public override void Enemy_inclining(e_plane_state _state)

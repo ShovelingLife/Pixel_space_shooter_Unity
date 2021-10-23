@@ -19,7 +19,7 @@ public class Path_test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        path = Enemy_info_manager.instance.d_enemy_path[path_type];
+        path = Enemy_info_manager.instance.dic_enemy_path[path_type];
         m_range += (speed * Time.deltaTime);
 
         switch (waypoint)

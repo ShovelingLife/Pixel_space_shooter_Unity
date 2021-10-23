@@ -18,12 +18,6 @@ public class Path_collider : MonoBehaviour
 
                 if (plane_state != e_plane_state.SHOOTING)
                     core.Enemy_inclining(plane_state);
-
-                else // 총알 트리거 발동
-                {
-                    if (enemy_type_green_one != null)
-                        StartCoroutine(enemy_type_green_one.IE_enemy_shoot_bullet());
-                }
             }
         }
     }

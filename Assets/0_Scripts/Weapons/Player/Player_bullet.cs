@@ -21,7 +21,7 @@ public class Player_bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Wall" ||
-            other.gameObject.tag == "Enemy") 
-            gameObject.SetActive(false);
+            other.gameObject.tag == "Enemy")
+            Object_pooling_manager.instance.Remove_obj(typeof(Player_bullet), transform);
     }
 }

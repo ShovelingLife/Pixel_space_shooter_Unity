@@ -2,45 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield_power_up_item : MonoBehaviour
+public class Shield_power_up_item : Power_up_item_core
 {
-    Vector3 m_rotation_pos = new Vector3();
-    public bool test;
-
-
-    private void Update()
+    protected override void Start()
     {
-        Move_power_up_item();
+        // 아이템 변수 초기화
+        base.Start();
+        m_fall_speed    = m_stat_inst.player_power_up_stat.shield_power_up_data.power_up_fall_speed;
+        m_rotate_degree = m_stat_inst.player_power_up_stat.shield_power_up_data.rotate_degree;
+        m_type          = typeof(Shield_power_up_item);
+        m_parent        = transform.parent;
+        // 리스트 초기화
+        //m_list_fn.Add(m_stat_inst.player_power_up_stat.Set_shield_power_up_time);
+        //m_list_fn.Add(Audio_manager.instance.power_up_sound.Play_get_shield_item_sound);
+        //m_list_fn.Add(UI_manager.instance.shield_power_up_ui.Turn_on_shield_power_up_UI);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            if (Stat_manager.instance.player_power_up_stat.shield_level > 0)
+            if (m_stat_inst.player_power_up_stat.shield_level > 0)
                 return;
 
-            gameObject.SetActive(false);
-            Stat_manager.instance.player_power_up_stat.is_shield_created = true;
+            m_stat_inst.player_power_up_stat.Set_shield_power_up_time();
             Audio_manager.instance.power_up_sound.Play_get_shield_item_sound();
-            Stat_manager.instance.player_power_up_stat.Set_shield_power_up_time();
             UI_manager.instance.shield_power_up_ui.Turn_on_shield_power_up_UI();
+            m_stat_inst.player_power_up_stat.is_shield_created = true;
+            base.OnTriggerEnter2D(other);
         }
-    }
-
-    // 파워업 아이템 움직임
-    void Move_power_up_item()
-    {
-        Vector3 current_pos         = this.transform.position;
-        Quaternion current_rotation = this.transform.rotation;
-
-        current_pos.y                -= Stat_manager.instance.player_power_up_stat.shield_power_up_data.power_up_fall_speed * Time.deltaTime;
-        m_rotation_pos.x             += Stat_manager.instance.player_power_up_stat.shield_power_up_data.rotate_degree * Time.deltaTime;
-        current_rotation.eulerAngles = m_rotation_pos;
-        this.transform.rotation      = current_rotation;
-        this.transform.position      = current_pos;
-
-        if (this.transform.position.y < Global.game_bottom_pos) 
-            gameObject.SetActive(false);
+        if (other.gameObject.name == "South_wall")
+            base.OnTriggerEnter2D(other);
     }
 }

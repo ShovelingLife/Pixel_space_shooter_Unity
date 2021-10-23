@@ -8,7 +8,7 @@ public class Log_screen_manager : Singleton_global<Log_screen_manager>
 {
     // ------- VARIABLES -------
     public Text    log;
-    Queue<string>  log_text_queue = new Queue<string>();
+    Queue<string>  m_que_log_text = new Queue<string>();
     string         m_log_text;
     float          m_current_time = 0f;
     readonly float m_timer        = 1f;
@@ -30,9 +30,9 @@ public class Log_screen_manager : Singleton_global<Log_screen_manager>
     // Put data into queue
     public void Insert_log(string _text)
     {
-        if (!log_text_queue.Contains(_text))
+        if (!m_que_log_text.Contains(_text))
         {
-            log_text_queue.Enqueue(_text);
+            m_que_log_text.Enqueue(_text);
             m_count++;
         }
     }
@@ -40,8 +40,8 @@ public class Log_screen_manager : Singleton_global<Log_screen_manager>
     // Print log
     void Show_log()
     {
-        while (log_text_queue.Count > 0)
-               m_log_text += log_text_queue.Dequeue() + "\n";
+        while (m_que_log_text.Count > 0)
+               m_log_text += m_que_log_text.Dequeue() + "\n";
 
         log.text = m_log_text;
     }

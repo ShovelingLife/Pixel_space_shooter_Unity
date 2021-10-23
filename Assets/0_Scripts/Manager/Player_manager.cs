@@ -4,22 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 키 입력 함수들을 들고있는 클래스
 [Serializable]
 public class Player_key
 {
-    public Dictionary<KeyCode, Action> d_single_key_fn =      new Dictionary<KeyCode, Action>();
-    public Dictionary<KeyCode, Action> d_continuous_key_fn =  new Dictionary<KeyCode, Action>();
-    public Dictionary<KeyCode, Action> d_single_key_up_fn =   new Dictionary<KeyCode, Action>();
+    public Dictionary<KeyCode, Action> dic_single_key_fn =      new Dictionary<KeyCode, Action>();
+    public Dictionary<KeyCode, Action> dic_continuous_key_fn =  new Dictionary<KeyCode, Action>();
+    public Dictionary<KeyCode, Action> dic_single_key_up_fn =   new Dictionary<KeyCode, Action>();
+}
+
+// 플레이어 풀링 데이터 들고있음
+[Serializable]
+public class Player_pooling_data
+{
+    [Header("플레이어 총알")]
+    public Transform  trans_bullet_obj_container;
+    public GameObject bullet_obj;
+
+    [Header("플레이어 미사일")]
+    public Transform  trans_missile_obj_container;
+    public GameObject missile_obj;
 }
 
 public class Player_manager : Singleton_local<Player_manager>
 {
     // 플레이어 관련
     [Header("플레이어 관련")]
-    public Sprite[] player_sprite_arr = new Sprite[3];
-    SpriteRenderer  m_current_sprite_renderer;
-    Vector2         player_move_pos;
-    bool            m_is_player_movable;
+    public Sprite[]            arr_player_sprite = new Sprite[3];
+    SpriteRenderer             m_current_sprite_renderer;
+    Vector2                    player_move_pos;
+    bool                       m_is_player_movable;
+    public Player_pooling_data player_pooling_data;
+    public Health_restore_data health_restore_data;
 
     // 플레이어 입력 관련
     [Header("플레이어 키 입력 관련")]
@@ -45,13 +61,13 @@ public class Player_manager : Singleton_local<Player_manager>
     // 플레이어 총알 관련
     [Header("플레이어 총알 관련")]
     public Player_bullet_data player_bullet_data;
-    public Transform          bullet_pos_trans;
+    public Transform          trans_bullet_pos;
 
     // UI 관련
     float m_current_time_count;
     float m_timer = 2f;
-    bool m_is_first_time = true;
-    bool m_is_on_pause;
+    bool  m_is_first_time = true;
+    bool  m_is_on_pause;
 
 
     void Start()
@@ -149,20 +165,20 @@ public class Player_manager : Singleton_local<Player_manager>
     void Init_player_input_key_settings()
     {
         // 키를 한 번 눌렀을 시
-        player_key.d_single_key_fn[KeyCode.P]              = Show_pause_menu; // P키 (정지/재개)
+        player_key.dic_single_key_fn[KeyCode.P]              = Show_pause_menu; // P키 (정지/재개)
 
         // 키를 연속적으로 눌렀을 시
-        player_key.d_continuous_key_fn[KeyCode.UpArrow]    = Player_moving_up;    // 윗키
-        player_key.d_continuous_key_fn[KeyCode.LeftArrow]  = Player_moving_left;  // 왼쪽키
-        player_key.d_continuous_key_fn[KeyCode.DownArrow]  = Player_moving_down;  // 아랫키
-        player_key.d_continuous_key_fn[KeyCode.RightArrow] = Player_moving_right; // 오른쪽키
-        player_key.d_continuous_key_fn[KeyCode.Space]      = Player_shoot_bullet; // 발사키
+        player_key.dic_continuous_key_fn[KeyCode.UpArrow]    = Player_moving_up;    // 윗키
+        player_key.dic_continuous_key_fn[KeyCode.LeftArrow]  = Player_moving_left;  // 왼쪽키
+        player_key.dic_continuous_key_fn[KeyCode.DownArrow]  = Player_moving_down;  // 아랫키
+        player_key.dic_continuous_key_fn[KeyCode.RightArrow] = Player_moving_right; // 오른쪽키
+        player_key.dic_continuous_key_fn[KeyCode.Space]      = Player_shoot_bullet; // 발사키
 
         // 키를 눌렀다 땠을 시
-        player_key.d_single_key_up_fn[KeyCode.UpArrow]     = Player_stopped_moving; // 윗키
-        player_key.d_single_key_up_fn[KeyCode.LeftArrow]   = Player_stopped_moving; // 왼쪽키
-        player_key.d_single_key_up_fn[KeyCode.DownArrow]   = Player_stopped_moving; // 아랫키
-        player_key.d_single_key_up_fn[KeyCode.RightArrow]  = Player_stopped_moving; // 오른쪽키
+        player_key.dic_single_key_up_fn[KeyCode.UpArrow]     = Player_stopped_moving; // 윗키
+        player_key.dic_single_key_up_fn[KeyCode.LeftArrow]   = Player_stopped_moving; // 왼쪽키
+        player_key.dic_single_key_up_fn[KeyCode.DownArrow]   = Player_stopped_moving; // 아랫키
+        player_key.dic_single_key_up_fn[KeyCode.RightArrow]  = Player_stopped_moving; // 오른쪽키
     }
 
     // 일시정지 혹 재개 P키
@@ -209,7 +225,7 @@ public class Player_manager : Singleton_local<Player_manager>
     // 플레이어 왼쪽 방향키 (움직임)
     void Player_moving_left()
     {
-        m_current_sprite_renderer.sprite = player_sprite_arr[2]; // 기울이기
+        m_current_sprite_renderer.sprite = arr_player_sprite[2]; // 기울이기
         player_move_pos.x -= player_stat_data.move_speed * Time.deltaTime;
         m_ray_direction = Vector2.left;
     }
@@ -217,7 +233,7 @@ public class Player_manager : Singleton_local<Player_manager>
     // 플레이어 오른쪽 방향키 (움직임)
     void Player_moving_right()
     {
-        m_current_sprite_renderer.sprite = player_sprite_arr[2]; // 기울이기
+        m_current_sprite_renderer.sprite = arr_player_sprite[2]; // 기울이기
         player_move_pos.x += player_stat_data.move_speed * Time.deltaTime;
         this.transform.rotation = Global.half_rotation;
         m_ray_direction = Vector2.right;
@@ -227,7 +243,7 @@ public class Player_manager : Singleton_local<Player_manager>
     void Player_stopped_moving()
     {
         this.transform.rotation = Global.zero_rotation;
-        m_current_sprite_renderer.sprite = player_sprite_arr[0];
+        m_current_sprite_renderer.sprite = arr_player_sprite[0];
     }
 
     // Check if player gets out from screen
@@ -248,12 +264,12 @@ public class Player_manager : Singleton_local<Player_manager>
         if (_moving_pos.x < 0)
         {
             transform.rotation = Global.zero_rotation;
-            m_current_sprite_renderer.sprite = player_sprite_arr[2];
+            m_current_sprite_renderer.sprite = arr_player_sprite[2];
         }
         else
         {
             transform.rotation = Global.half_rotation;
-            m_current_sprite_renderer.sprite = player_sprite_arr[2];
+            m_current_sprite_renderer.sprite = arr_player_sprite[2];
         }
     }
 
@@ -281,7 +297,7 @@ public class Player_manager : Singleton_local<Player_manager>
     // 플레이어가 키를 단일적으로 입력시
     void Player_input_single_key()
     {
-        foreach (var input_key in player_key.d_single_key_fn)
+        foreach (var input_key in player_key.dic_single_key_fn)
         {
             if (Input.GetKeyDown(input_key.Key)) 
                 input_key.Value.Invoke();
@@ -294,7 +310,7 @@ public class Player_manager : Singleton_local<Player_manager>
         int layer_mask  = Global.Get_raycast_layermask_index("Wall");
         player_move_pos = this.transform.position;
 
-        foreach (var input_key in player_key.d_continuous_key_fn)
+        foreach (var input_key in player_key.dic_continuous_key_fn)
         {
             if (Input.GetKey(input_key.Key))
             {
@@ -319,7 +335,7 @@ public class Player_manager : Singleton_local<Player_manager>
     // 플레이어가 키를 눌렀다가 땠을 시
     void Player_input_single_key_up()
     {
-        foreach (var key_input in player_key.d_single_key_up_fn)
+        foreach (var key_input in player_key.dic_single_key_up_fn)
         {
             if (Input.GetKeyUp(key_input.Key)) 
                 key_input.Value.Invoke();
@@ -366,7 +382,7 @@ public class Player_manager : Singleton_local<Player_manager>
                 if (i == player_stat_data.max_missile_level) 
                     return;
 
-                missile_obj_arr[i] = Pooling_manager.instance.Get_obj(typeof(Player_missile));
+                missile_obj_arr[i] = Object_pooling_manager.instance.Create_obj(typeof(Player_missile), player_pooling_data.missile_obj.transform, player_pooling_data.trans_missile_obj_container).gameObject;
                 Player_missile player_missile = missile_obj_arr[i].GetComponent<Player_missile>();
 
                 if (missile_obj_arr[i] != null)
@@ -381,7 +397,6 @@ public class Player_manager : Singleton_local<Player_manager>
                         missile_obj_arr[i].transform.position = m_player_power_up_stat.missile_second_level_trans.position;
                         player_missile.current_direction      = "Right_direction";
                     }
-                    missile_obj_arr[i].SetActive(true);
                 }
             }
             m_player_power_up_stat.missile_current_time = 0f;
@@ -413,20 +428,18 @@ public class Player_manager : Singleton_local<Player_manager>
             if (i == player_stat_data.max_power_up_level) 
                 return;
 
-            bullet_obj_arr[i] = Pooling_manager.instance.Get_obj(typeof(Player_bullet));
+            bullet_obj_arr[i] = Object_pooling_manager.instance.Create_obj(typeof(Player_bullet), player_pooling_data.bullet_obj.transform, player_pooling_data.trans_bullet_obj_container).gameObject;
 
             if (bullet_obj_arr[i] != null)
             {
-                if (i == 0) 
-                    bullet_obj_arr[i].transform.position = bullet_pos_trans.position;
+                if      (i == 0) 
+                         bullet_obj_arr[i].transform.position = trans_bullet_pos.position;
 
-                if (i == 1) 
-                    bullet_obj_arr[i].transform.position = m_player_power_up_stat.second_bullet_trans.position;
+                else if (i == 1) 
+                         bullet_obj_arr[i].transform.position = m_player_power_up_stat.second_bullet_trans.position;
 
-                if (i == 2) 
-                    bullet_obj_arr[i].transform.position = m_player_power_up_stat.third_bullet_trans.position;
-
-                bullet_obj_arr[i].SetActive(true);
+                else if (i == 2) 
+                         bullet_obj_arr[i].transform.position = m_player_power_up_stat.third_bullet_trans.position;
             }
         }
     }
@@ -443,7 +456,7 @@ public class Player_manager : Singleton_local<Player_manager>
             Audio_manager.instance.player_sound.Play_collision_death_sound();
 
         this.transform.rotation = Global.zero_rotation;
-        m_current_sprite_renderer.sprite = player_sprite_arr[0];
+        m_current_sprite_renderer.sprite = arr_player_sprite[0];
 
         if (current_hp_prop <= 0) 
             StartCoroutine(IE_player_death_anim()); // 죽음

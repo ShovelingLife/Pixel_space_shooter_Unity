@@ -11,7 +11,7 @@ public class Enemy_path : MonoBehaviour
     public e_gizmo_color_type  color_code;
     public e_path_type         path_type;
     [Range(0, 1)] public float percent;
-    public Vector3[]           a_objs_pos;
+    public Vector3[]           arr_objs_pos;
 
 
     // 색상
@@ -30,13 +30,13 @@ public class Enemy_path : MonoBehaviour
         {
             if(draw_points_line)
             {
-                Gizmos.DrawLine(a_objs_pos[0], a_objs_pos[1]);
-                Gizmos.DrawLine(a_objs_pos[1], a_objs_pos[2]);
-                Gizmos.DrawLine(a_objs_pos[2], a_objs_pos[3]);
+                Gizmos.DrawLine(arr_objs_pos[0], arr_objs_pos[1]);
+                Gizmos.DrawLine(arr_objs_pos[1], arr_objs_pos[2]);
+                Gizmos.DrawLine(arr_objs_pos[2], arr_objs_pos[3]);
             }
             if(draw_path_line)
             {
-                Gizmos.color = Global.d_gizmo_color[color_code];
+                Gizmos.color = Global.dic_gizmo_color[color_code];
 
                 for (float i = 0; i < 100; i++)
                 {
@@ -50,16 +50,16 @@ public class Enemy_path : MonoBehaviour
         {
             if (draw_points_line)
             {
-                Gizmos.DrawLine(a_objs_pos[0], a_objs_pos[1]);
-                Gizmos.DrawLine(a_objs_pos[1], a_objs_pos[2]);
-                Gizmos.DrawLine(a_objs_pos[2], a_objs_pos[3]);
-                Gizmos.DrawLine(a_objs_pos[4], a_objs_pos[5]);
-                Gizmos.DrawLine(a_objs_pos[5], a_objs_pos[6]);
-                Gizmos.DrawLine(a_objs_pos[6], a_objs_pos[7]);
+                Gizmos.DrawLine(arr_objs_pos[0], arr_objs_pos[1]);
+                Gizmos.DrawLine(arr_objs_pos[1], arr_objs_pos[2]);
+                Gizmos.DrawLine(arr_objs_pos[2], arr_objs_pos[3]);
+                Gizmos.DrawLine(arr_objs_pos[4], arr_objs_pos[5]);
+                Gizmos.DrawLine(arr_objs_pos[5], arr_objs_pos[6]);
+                Gizmos.DrawLine(arr_objs_pos[6], arr_objs_pos[7]);
             }
             if(draw_path_line)
             {
-                Gizmos.color = Global.d_gizmo_color[color_code];
+                Gizmos.color = Global.dic_gizmo_color[color_code];
 
                 for (float i = 0; i < 100; i++)
                 {
@@ -91,7 +91,7 @@ public class Enemy_path : MonoBehaviour
     [ContextMenu("기즈모 경로 생성")]
     public void Create_path()
     {
-        a_objs_pos = new Vector3[(int)path_type];
+        arr_objs_pos = new Vector3[(int)path_type];
     }
 
     // 그리기용
@@ -100,9 +100,9 @@ public class Enemy_path : MonoBehaviour
         // ---------
         // |  /o\  |
         // | /   \ |
-        Vector3 a = Vector3.Lerp(a_objs_pos[0], a_objs_pos[1], _percent);
-        Vector3 b = Vector3.Lerp(a_objs_pos[1], a_objs_pos[2], _percent);
-        Vector3 c = Vector3.Lerp(a_objs_pos[2], a_objs_pos[3], _percent);
+        Vector3 a = Vector3.Lerp(arr_objs_pos[0], arr_objs_pos[1], _percent);
+        Vector3 b = Vector3.Lerp(arr_objs_pos[1], arr_objs_pos[2], _percent);
+        Vector3 c = Vector3.Lerp(arr_objs_pos[2], arr_objs_pos[3], _percent);
         Vector3 d = Vector3.Lerp(a, b, _percent);
         Vector3 e = Vector3.Lerp(b, c, _percent);
         return Vector3.Lerp(d, e, _percent);
@@ -111,9 +111,9 @@ public class Enemy_path : MonoBehaviour
     // 그리기용#2
     public Vector3 Get_second_path(float _percent)
     {
-        Vector3 a = Vector3.Lerp(a_objs_pos[4], a_objs_pos[5], _percent);
-        Vector3 b = Vector3.Lerp(a_objs_pos[5], a_objs_pos[6], _percent);
-        Vector3 c = Vector3.Lerp(a_objs_pos[6], a_objs_pos[7], _percent);
+        Vector3 a = Vector3.Lerp(arr_objs_pos[4], arr_objs_pos[5], _percent);
+        Vector3 b = Vector3.Lerp(arr_objs_pos[5], arr_objs_pos[6], _percent);
+        Vector3 c = Vector3.Lerp(arr_objs_pos[6], arr_objs_pos[7], _percent);
         Vector3 d = Vector3.Lerp(a, b, _percent);
         Vector3 e = Vector3.Lerp(b, c, _percent);
         return Vector3.Lerp(d, e, _percent);
@@ -133,10 +133,10 @@ public class Enemy_path_editor : Editor
         Vector3 label_pos = Vector3.zero;
 
         // 위치 움직일 수 있는 핸들 그려줌
-        for (int i = 0; i < gizmo.a_objs_pos.Length; i++)
+        for (int i = 0; i < gizmo.arr_objs_pos.Length; i++)
         {
-            gizmo.a_objs_pos[i] = Handles.PositionHandle(gizmo.a_objs_pos[i], Quaternion.identity);
-            label_pos = gizmo.a_objs_pos[i];
+            gizmo.arr_objs_pos[i] = Handles.PositionHandle(gizmo.arr_objs_pos[i], Quaternion.identity);
+            label_pos = gizmo.arr_objs_pos[i];
             label_pos.x += 0.1f;
             label_pos.y += 0.75f;
             Handles.Label(label_pos, $"Point{i}", label_style);

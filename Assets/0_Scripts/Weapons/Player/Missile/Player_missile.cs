@@ -31,12 +31,17 @@ public class Player_missile : MonoBehaviour
 
     void Update()
     {
+        if (enemy_core &&
+            !enemy_core.isActiveAndEnabled)
+            enemy_core = null;
+
         Set_target();
         Update_missile_state();
     }
 
     private void OnDisable()
     {
+        Object_pooling_manager.instance.Remove_obj(typeof(Player_missile), transform);
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         m_is_targeted = false;
 
@@ -50,12 +55,19 @@ public class Player_missile : MonoBehaviour
             enemy_core = null;
     }
 
+    private void OnEnable()
+    {
+        GetComponent<BoxCollider2D>().enabled = true;
+
+    }
+
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         string collided_obj_tag = other.gameObject.tag;
 
-        if (collided_obj_tag == "Enemy" ||
-            collided_obj_tag == "Wall")
+        if (collided_obj_tag == "Wall")
             gameObject.SetActive(false);
     }
 
@@ -78,10 +90,9 @@ public class Player_missile : MonoBehaviour
             float distance = Vector3.Distance(transform.localPosition, enemy_core.transform.localPosition);
             Log_screen_manager.instance.Insert_log($"미사일과 적의 거리 차이 : {distance}");
 
-            if(distance<=20f)
+            //if(distance<=100f)
                 Set_attack_property();
         }
-
         else
             Set_idle_property();
     }

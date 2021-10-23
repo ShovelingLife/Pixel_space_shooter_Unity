@@ -6,15 +6,18 @@ using UnityEngine;
 public class Enemy_info_manager : Singleton_local<Enemy_info_manager>
 {
     // ------- Monster variables -------
-    public List<Enemy_core>                          l_enemy_info = new List<Enemy_core>();
-    public Dictionary<e_enemy_path_type, Enemy_path> d_enemy_path = new Dictionary<e_enemy_path_type, Enemy_path>();
+    public List<Enemy_core>                          list_enemy_info = new List<Enemy_core>();
+    public Dictionary<e_enemy_path_type, Enemy_path> dic_enemy_path = new Dictionary<e_enemy_path_type, Enemy_path>();
 
+    // 오브젝트들
+    public GameObject small_bullet_obj;
+    public Transform  small_bullet_obj_container;
 
     public void Init()
     {
         foreach (var item in Resources.FindObjectsOfTypeAll<Enemy_path>())
         {
-            Enemy_info_manager.instance.d_enemy_path.Add(item.enemy_path, item);
+            Enemy_info_manager.instance.dic_enemy_path.Add(item.enemy_path, item);
             item.gameObject.SetActive(false);
         }
     }
@@ -28,7 +31,7 @@ public class Enemy_info_manager : Singleton_local<Enemy_info_manager>
     // Checking the list
     void Check_if_enemy_is_dead()
     {
-        foreach (var item in l_enemy_info)
+        foreach (var item in list_enemy_info)
         {
             if (!item.isActiveAndEnabled)
             {
@@ -43,17 +46,17 @@ public class Enemy_info_manager : Singleton_local<Enemy_info_manager>
     // Set first enemy info
     public void Set_first_enemy_info(Enemy_type_green_one _enemy)
     {
-        if (!l_enemy_info.Contains(_enemy))
-            l_enemy_info.Add(_enemy);
+        if (!list_enemy_info.Contains(_enemy))
+            list_enemy_info.Add(_enemy);
     }
 
     // Delete from the list
     public void Delete_enemy_info(Enemy_core _core)
     {
-        if (l_enemy_info.Count == 0)
+        if (list_enemy_info.Count == 0)
             return;
 
-        l_enemy_info.Remove(_core);
+        list_enemy_info.Remove(_core);
     }
 
     // Get from the list
@@ -61,13 +64,17 @@ public class Enemy_info_manager : Singleton_local<Enemy_info_manager>
     {
         Enemy_core tmp_enemy_core = null;
 
-        foreach (var item in l_enemy_info)
+        foreach (var item in list_enemy_info)
         {
-            if (item.current_hp > 0f)
+            Enemy_type_green_one tmp_enemy1 = item.GetComponent<Enemy_type_green_one>();
+
+            if (tmp_enemy1)
             {
-                item.current_hp -= Stat_manager.instance.player_power_up_stat.missile_power_up_data.missile_dmg;
-                tmp_enemy_core = item;
-                break;
+                if(tmp_enemy1.is_ready)
+                {
+                    tmp_enemy_core = item;
+                    break;
+                }
             }
         }
         return tmp_enemy_core;
@@ -76,7 +83,7 @@ public class Enemy_info_manager : Singleton_local<Enemy_info_manager>
     // 모든 경로 차단
     public void Turn_off_all_paths()
     {
-        foreach (var item in d_enemy_path)
+        foreach (var item in dic_enemy_path)
         {
             item.Value.gameObject.SetActive(false);
         }
