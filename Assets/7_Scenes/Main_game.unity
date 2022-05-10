@@ -2708,6 +2708,18 @@ MonoBehaviour:
   - copy_obj: {fileID: 1514838675309981996, guid: 89f87d7a9f6e6e047be52394135b171b,
       type: 3}
     obj_container: {fileID: 239221432}
+  - copy_obj: {fileID: 8590894215384219057, guid: a923a91e01ea96a4cb1fa2d57e491757,
+      type: 3}
+    obj_container: {fileID: 1458644446}
+  - copy_obj: {fileID: 4409405817427382793, guid: 921c3b7b70b9e1f45b342c094d86bb7e,
+      type: 3}
+    obj_container: {fileID: 973519257}
+  - copy_obj: {fileID: 5035262663472870756, guid: fc15f9aa015c3444ab6040a09669c222,
+      type: 3}
+    obj_container: {fileID: 132955942}
+  - copy_obj: {fileID: 8546744777157847222, guid: e2c6196b24f17ac4598108bdd6b9d239,
+      type: 3}
+    obj_container: {fileID: 270069710}
   - copy_obj: {fileID: 77470437292595217, guid: 3702f86bffc5a944f9cd0edf111a373d,
       type: 3}
     obj_container: {fileID: 330254257}
@@ -13483,21 +13495,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_spawn_data_list:
     list_item_spawn_data:
-    - power_up_obj: {fileID: 8590894215384219057, guid: a923a91e01ea96a4cb1fa2d57e491757,
-        type: 3}
-      power_up_obj_container: {fileID: 1458644446}
-    - power_up_obj: {fileID: 4409405817427382793, guid: 921c3b7b70b9e1f45b342c094d86bb7e,
-        type: 3}
-      power_up_obj_container: {fileID: 973519257}
-    - power_up_obj: {fileID: 1514838675309981996, guid: 89f87d7a9f6e6e047be52394135b171b,
-        type: 3}
-      power_up_obj_container: {fileID: 239221432}
-    - power_up_obj: {fileID: 5035262663472870756, guid: fc15f9aa015c3444ab6040a09669c222,
-        type: 3}
-      power_up_obj_container: {fileID: 132955942}
-    - power_up_obj: {fileID: 8546744777157847222, guid: e2c6196b24f17ac4598108bdd6b9d239,
-        type: 3}
-      power_up_obj_container: {fileID: 270069710}
+    - {power_up_obj: {fileID: 8590894215384219057, guid: a923a91e01ea96a4cb1fa2d57e491757,
+        type: 3}, power_up_obj_container: {fileID: 1458644446}}
+    - {power_up_obj: {fileID: 4409405817427382793, guid: 921c3b7b70b9e1f45b342c094d86bb7e,
+        type: 3}, power_up_obj_container: {fileID: 973519257}}
+    - {power_up_obj: {fileID: 1514838675309981996, guid: 89f87d7a9f6e6e047be52394135b171b,
+        type: 3}, power_up_obj_container: {fileID: 239221432}}
+    - {power_up_obj: {fileID: 5035262663472870756, guid: fc15f9aa015c3444ab6040a09669c222,
+        type: 3}, power_up_obj_container: {fileID: 132955942}}
+    - {power_up_obj: {fileID: 8546744777157847222, guid: e2c6196b24f17ac4598108bdd6b9d239,
+        type: 3}, power_up_obj_container: {fileID: 270069710}}
+  item_spawn_pos_data:
+    m_arr_power_up_init_pos: []
+  m_item_spawn_time: 1
 --- !u!4 &2078875368
 Transform:
   m_ObjectHideFlags: 0

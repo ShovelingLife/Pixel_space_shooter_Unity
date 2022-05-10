@@ -50,9 +50,6 @@ public enum e_pooling_obj_type
     PLAYER_MISSILE,
     PLAYER_BULLET,
 
-    // Enemy Type
-    ENEMY_GREEN_TYPE_ONE,
-
     // Enemy weapons
     ENEMY_SMALL_BULLET,
     ENEMY_MEDIUM_BULLET,
@@ -68,12 +65,12 @@ public enum e_pooling_obj_type
 }
 
 // Level pooling
-public enum e_level_obj_type
+public enum e_enemy_obj_type
 {
-    // Enemy Type
-    ENEMY_GREEN_TYPE_ONE,
+    // 적 종류
+    ENEMY_GREEN_TYPE_ONE = ((int)e_pooling_obj_type.PLAYER_SHIELD) + 1,
 
-    // Meteorite types
+    // 운석 종류
     BIG_METEORITE,
     MEDIUM_METEORITE,
     SMALL_METEORITE

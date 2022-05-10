@@ -40,24 +40,33 @@ public class Global
     readonly public static int power_up_item_array_index     = 5;
     readonly public static int power_up_position_array_index = 26;
 
+    // 아이템 위치 관련
+    public static Vector3[] arr_power_up_pos;
 
-    // Returns random int
-    public static int Rand(int _min,int _max)
+    // 값 초기화
+    public static void Init_arr_power_up_pos()
     {
-        return Random.Range(_min, _max);
+        // 위치 배열 업데이트
+        arr_power_up_pos = new Vector3[power_up_position_array_index];
+        float pos_x = -9.75f;
+
+        for (int i = 0; i < power_up_position_array_index; i++)
+        {
+            arr_power_up_pos[i].x = pos_x;
+            arr_power_up_pos[i].y = 25.3f;
+            arr_power_up_pos[i].z = 3f;
+            pos_x += 0.75f;
+        }
     }
 
-    // Returns random float
-    public static float Rand(float _min, float _max)
-    {
-        return Random.Range(_min, _max);
-    }
+    // 랜덤형 int 변수
+    public static int Rand(int _min,int _max) { return Random.Range(_min, _max); }
+
+    // 랜덤형 float 실수
+    public static float Rand(float _min, float _max) { return Random.Range(_min, _max); }
 
     // 레이캐스트 레이어 반환
-    public static int Get_raycast_layermask_index(string _layer_mask)
-    {
-        return 1 << LayerMask.NameToLayer(_layer_mask);
-    }
+    public static int Get_raycast_layermask_index(string _layer_mask) { return 1 << LayerMask.NameToLayer(_layer_mask); }
 
     // 전 방향 레이 테스트
     public static void Test_ray_all_direction(Transform _ray_target)
@@ -88,5 +97,5 @@ public class Global
         _ray_pos_arr[5] = left_down_diagonal_direction;
         _ray_pos_arr[6] = Vector2.down;
         _ray_pos_arr[7] = right_down_diagonal_direction;
-    } 
+    }
 }

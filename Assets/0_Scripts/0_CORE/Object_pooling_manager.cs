@@ -26,7 +26,7 @@ public class Object_pooling_manager : Singleton_local<Object_pooling_manager>
     protected Dictionary<Type, Stack<GameObject>> m_dict_pool_manager = new Dictionary<Type, Stack<GameObject>>();
 
     // 사용했던 
-    public    List<Object_pool_data>              list_prev_obj       = new List<Object_pool_data>();
+    public List<Object_pool_data> list_prev_obj = new List<Object_pool_data>();
 
 
     private void Awake()
@@ -84,7 +84,6 @@ public class Object_pooling_manager : Singleton_local<Object_pooling_manager>
             tmp_stack = new Stack<GameObject>();
             m_dict_pool_manager.Add(_type, tmp_stack);
         }
-
         // ------- Transform 초기화 부분 -------
 
         // 스택에 오브젝트가 있고 꺼져있으면 해당 오브젝트 트랜스폼 가져옴
@@ -149,7 +148,6 @@ public class Object_pooling_manager : Singleton_local<Object_pooling_manager>
     IEnumerator IE_remove_obj(Type _type, Transform _trans, Transform _trans_parent = null, float _remove_sec = 0f)
     {
         yield return new WaitForSeconds(_remove_sec);
-
         Remove_obj(_type, _trans, _trans_parent);
     }
 

@@ -7,24 +7,14 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Init();
-        Level_manager.instance.Init();
     }
 
     // 초기화
     private void Init()
     {
-        // 경로
-        Enemy_info_manager.instance.Init();
-
-        // UI
-        UI_manager.instance.Init();
-
-        // 아이템
-        //StartCoroutine(Spawn_manager.instance.IE_spawn_player_power_up_items());
-
-        // 레벨 
-        //Level_manager.instance.Init();
-        //Level_manager.instance.core.Init();
-        //Level_manager.instance.Run_current_level();
+        Global.Init_arr_power_up_pos();
+        Enemy_info_manager.instance.Init(); // 경로
+        UI_manager.instance.Init(); // UI
+        Level_manager.instance.Init(); // 레벨 
     }
 }

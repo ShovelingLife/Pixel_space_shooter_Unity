@@ -11,13 +11,7 @@ public class Singleton_local<T> : MonoBehaviour where T:MonoBehaviour
         get
         {
             GameObject singleton_obj = GameObject.FindObjectOfType<T>().gameObject;
-            
-            if (!singleton_obj) 
-                _instance = singleton_obj.AddComponent<T>();
-
-            else 
-                _instance = singleton_obj.GetComponent<T>();
-
+            _instance = (singleton_obj == null) ? singleton_obj.AddComponent<T>() : singleton_obj.GetComponent<T>();
             return _instance;
         }
     }
