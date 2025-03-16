@@ -1,7 +1,7 @@
 ﻿
 
 // Missile moving type
-public enum e_missile_direction
+public enum EMissileDir
 {
     UP,
     DOWN,
@@ -11,7 +11,7 @@ public enum e_missile_direction
 }
 
 // Plane inclining
-public enum e_plane_state
+public enum EPlaneState
 {
     IDLE,
     RIGHT,
@@ -20,7 +20,7 @@ public enum e_plane_state
 }
 
 // 적 비행기 웨이포인트
-public enum e_enemy_waypoint
+public enum EEnemyWaypoint
 {
     FIRST,
     SECOND,
@@ -30,14 +30,14 @@ public enum e_enemy_waypoint
 };
 
 // Log screen class transform type
-public enum e_class_transform_type
+public enum EClassTransformType
 {
     POSITION,
     LOCAL_POSITION
 }
 
 // Pooling object enum
-public enum e_pooling_obj_type
+public enum EPoolingObjType
 {
     // Player power up
     PLAYER_HEALTH,
@@ -65,10 +65,10 @@ public enum e_pooling_obj_type
 }
 
 // Level pooling
-public enum e_enemy_obj_type
+public enum EEnemyObjType
 {
     // 적 종류
-    ENEMY_GREEN_TYPE_ONE = ((int)e_pooling_obj_type.PLAYER_SHIELD) + 1,
+    ENEMY_GREEN_TYPE_ONE = ((int)EPoolingObjType.PLAYER_SHIELD) + 1,
 
     // 운석 종류
     BIG_METEORITE,
@@ -77,7 +77,7 @@ public enum e_enemy_obj_type
 }
 
 // 스테이지 이벤트 타입
-public enum e_stage_event_type
+public enum EStageEventType
 {
     ITEM,
     ENEMY,
@@ -88,7 +88,7 @@ public enum e_stage_event_type
 }
 
 // Boss enemy pattern type
-public enum e_boss_pattern_type
+public enum EBossPatternType
 {
     FIRST,
     SECOND,
@@ -99,7 +99,7 @@ public enum e_boss_pattern_type
 }
 
 // 일반 적 경로
-public enum e_enemy_path_type
+public enum EEnemyPathType
 {
     FIRST,
     SECOND,

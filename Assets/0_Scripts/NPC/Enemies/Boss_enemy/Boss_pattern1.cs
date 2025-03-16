@@ -41,7 +41,7 @@ public class Boss_pattern1 : Boss_pattern_core
     protected override void Attack()
     {
         Boss_bullet_type1 bullet_type1 = null;
-        Transform tmp_obj = Object_pooling_manager.instance.Create_obj(typeof(Boss_bullet_type1), boss_enemy_core.bullet_obj.transform, boss_enemy_core.bullet_container);
+        Transform tmp_obj = ObjectPoolingManager.inst.CreateObj(typeof(Boss_bullet_type1), boss_enemy_core.bullet_obj.transform, boss_enemy_core.bullet_container);
         tmp_obj.localPosition = m_bullet_pos;
         bullet_type1 = tmp_obj.GetComponent<Boss_bullet_type1>();
 

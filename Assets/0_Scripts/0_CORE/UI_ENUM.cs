@@ -1,5 +1,5 @@
 ﻿// 기즈모 색상 종류
-public enum e_gizmo_color_type
+public enum EGizmoColorType
 {
     WHITE,
     BLACK,
@@ -13,14 +13,14 @@ public enum e_gizmo_color_type
 };
 
 // 경로 종류
-public enum e_path_type
+public enum EPathType
 {
     SINGLE_CURVE = 4,
     DOUBLE_CURVE = 8
 }
 
 // 레벨 종류
-public enum e_level_type
+public enum ELevelType
 {
     END,
     FIRST,
@@ -32,7 +32,7 @@ public enum e_level_type
 };
 
 // 레벨 종류
-public enum e_current_level_type
+public enum ECurLvlType
 {
     FIRST = 1,
     SECOND,
@@ -42,7 +42,7 @@ public enum e_current_level_type
 };
 
 // 페이즈 종류
-public enum e_phase_type
+public enum EPhaseType
 {
     FIRST = 1,
     SECOND,

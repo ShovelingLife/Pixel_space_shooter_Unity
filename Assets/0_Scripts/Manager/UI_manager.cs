@@ -4,108 +4,108 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UI_manager : Singleton_local<UI_manager>
+public class UI_manager : SingletonLocal<UI_manager>
 {
     [Header("파워 업 UI 데이터")]
-    public Power_up_UI_data power_up_UI_data;
+    public Power_up_UI_data powerUpUI_data;
 
+    // 수정 
     [Header("파워 업 UI")]
-    public Bullet_power_up_UI bullet_power_up_ui;
-    public Bullet_speed_up_UI bullet_speed_up_ui;
-    public Missile_power_up_UI missile_power_up_ui;
-    public Shield_power_up_UI shield_power_up_ui;
+    public BulletPowerUpUI bulletPowerUpUI;
+    public BulletSpeedUpUI bulletSpeedUpUI;
+    public MissilePowerUpUI missilePowerUpUI;
+    public ShieldPowerUpUI shieldPowerUpUI;
 
     [Header("안내 메시지")]
-    public GameObject game_start_text_obj;
-    Text              mtxt_game_start;
-    float             m_current_time_count;
-    float             m_timer = 0.5f;
-    int               m_display_count = 0;
-    bool              m_display_alert_text;
-    bool              m_is_text_fading;
+    public GameObject gameStartTxtObj;
+    Text              txtGameStart;
+    float             curTimeCnt;
+    float             timer = 0.5f;
+    int               displayCnt = 0;
+    bool              displayAlertTxt;
+    bool              isTextFading;
 
     [Header("플레이어")]
-    public Text    player_score_txt;
-    public Image   player_hp_img;
-    public int     current_score = 0;
+    public Text    playerScoreTxt;
+    public Image   playerHpImg;
+    public int     curScore = 0;
 
     [Header("보스 몬스터")]
-    public GameObject boss_hp_obj;
+    public GameObject bossHpObj;
 
     void Update()
     {
-        Show_alert_text();
-        Show_player_info();
+        ShowAlertTxt();
+        ShowPlayerInfo();
     }
 
     // 변수 초기화
     public void Init()
     {
-        mtxt_game_start      = game_start_text_obj.GetComponent<Text>();
-        bullet_power_up_ui  = GetComponent<Bullet_power_up_UI>();
-        bullet_speed_up_ui  = GetComponent<Bullet_speed_up_UI>();
-        shield_power_up_ui  = GetComponent<Shield_power_up_UI>();
-        missile_power_up_ui = GetComponent<Missile_power_up_UI>();
+        txtGameStart     = gameStartTxtObj.GetComponent<Text>();
+        bulletPowerUpUI  = GetComponent<BulletPowerUpUI>();
+        bulletSpeedUpUI  = GetComponent<BulletSpeedUpUI>();
+        shieldPowerUpUI  = GetComponent<ShieldPowerUpUI>();
+        missilePowerUpUI = GetComponent<MissilePowerUpUI>();
     }
 
     // 게임 시작 문구
-    void Show_alert_text()
+    void ShowAlertTxt()
     {
-        if (!m_display_alert_text) 
+        if (!displayAlertTxt) 
             return;
 
         else // 띄울 메시지가 있으면
         {
-            m_current_time_count += Time.deltaTime;
+            curTimeCnt += Time.deltaTime;
             
-            if (m_display_count > 3) // 최대 횟수
+            if (displayCnt > 3) // 최대 횟수
             {
-                m_display_count = 0;
-                m_display_alert_text = false;
+                displayCnt = 0;
+                displayAlertTxt = false;
             }
-            if (m_current_time_count > m_timer) // 타이머
+            if (curTimeCnt > timer) // 타이머
             {
-                if (!m_is_text_fading) // 사라지지 않고 있으면
+                if (!isTextFading) // 사라지지 않고 있으면
                 {
-                    mtxt_game_start.color = Global.original_color;
-                    m_is_text_fading = true;
+                    txtGameStart.color = Global.OriginalColor;
+                    isTextFading = true;
                 }
                 else // 사라지고 있으면
                 {
-                    mtxt_game_start.color = Global.sprite_fade_color;
-                    m_is_text_fading = false;
+                    txtGameStart.color = Global.SpriteFadeColor;
+                    isTextFading = false;
                 }
-                m_current_time_count = 0f;
-                m_display_count++;
+                curTimeCnt = 0f;
+                displayCnt++;
             }
         }
     }
 
-    // 플레이어 정보 띄움
-    void Show_player_info()
+    void ShowPlayerInfo()
     {
-        Player_stat_data player_stat_data = Stat_manager.instance.player_stat_data;
-        player_score_txt.text             = "현재 점수 : " + current_score;
-        player_hp_img.fillAmount          = Player_manager.instance.current_hp_prop / player_stat_data.max_hp;
+        PlayerStatData playerStatData = StatManager.inst.playerStatData;
+        playerScoreTxt.text           = "현재 점수 : " + curScore;
+        playerHpImg.fillAmount        = PlayerManager.inst.CurHp / playerStatData.maxHp;
 
         // 파워업 레벨
-        power_up_UI_data.bullet_power_up_txt.text  = Stat_manager.instance.player_power_up_stat.power_up_level.ToString();
-        power_up_UI_data.bullet_speed_up_txt.text  = Stat_manager.instance.player_power_up_stat.speed_up_level.ToString();
-        power_up_UI_data.missile_power_up_txt.text = Stat_manager.instance.player_power_up_stat.missile_level.ToString();
-        power_up_UI_data.shield_power_up_txt.text  = Stat_manager.instance.player_power_up_stat.shield_level.ToString();
+        powerUpUI_data.bullet_power_up_txt.text  = StatManager.inst.playerPowerUpStat.powerUpLvl.ToString();
+        powerUpUI_data.bullet_speed_up_txt.text  = StatManager.inst.playerPowerUpStat.speedUpLvl.ToString();
+        powerUpUI_data.missile_power_up_txt.text = StatManager.inst.playerPowerUpStat.missileLvl.ToString();
+        powerUpUI_data.shield_power_up_txt.text  = StatManager.inst.playerPowerUpStat.shieldLvl.ToString();
     }
 
     // 안내 메시지 메시지 바꿈
-    public void Set_alert_text(e_level_type _current_level)
+    public void SetAlertMsg(ELevelType _curLvl)
     {
-        Dictionary<e_level_type, string> d_level = new Dictionary<e_level_type, string>()
+        Dictionary<ELevelType, string> levels = new Dictionary<ELevelType, string>()
         {
-            {e_level_type.END,"게임 종료" },        {e_level_type.FIRST,"첫번째 스테이지" },{e_level_type.SECOND,"두번째 스테이지" },
-            {e_level_type.THIRD,"세번째 스테이지" },{e_level_type.FOURTH,"네번째 스테이지" },{e_level_type.FIFTH,"다섯번째 스테이지" },
-            {e_level_type.BOSS,"보스 출몰" }
+            {ELevelType.END,"게임 종료" },        {ELevelType.FIRST,"첫번째 스테이지" },{ELevelType.SECOND,"두번째 스테이지" },
+            {ELevelType.THIRD,"세번째 스테이지" },{ELevelType.FOURTH,"네번째 스테이지" },{ELevelType.FIFTH,"다섯번째 스테이지" },
+            {ELevelType.BOSS,"보스 출몰" }
         };
-        mtxt_game_start.text = d_level[_current_level];
-        m_display_alert_text = true;
+        txtGameStart.text = levels[_curLvl];
+        displayAlertTxt = true;
     }
 }
 

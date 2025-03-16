@@ -20,7 +20,7 @@ public class Boss_enemy_core : MonoBehaviour
         new Boss_pattern4(),
         new Boss_pattern5()
        };
-    protected e_boss_pattern_type m_pattern_type; 
+    protected EBossPatternType m_pattern_type; 
               Boss_pattern_core   m_boss_pattern_core = null;
               bool                m_is_ready = true;
 
@@ -39,7 +39,7 @@ public class Boss_enemy_core : MonoBehaviour
 
     void Start()
     {
-        hp_bar_image     = UI_manager.instance.boss_hp_obj.transform.GetChild(1).GetComponent<Image>();
+        hp_bar_image     = UI_manager.inst.bossHpObj.transform.GetChild(1).GetComponent<Image>();
         bullet_obj       = transform.GetChild(0).gameObject;
         bullet_container = transform.GetChild(1).transform;
     }
@@ -54,7 +54,7 @@ public class Boss_enemy_core : MonoBehaviour
             Run_pattern();
             m_is_ready = false;
         }
-        Log_screen_manager.instance.Insert_log(m_pattern_type.ToString());
+        LogScreenManager.inst.Insert(m_pattern_type.ToString());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,13 +68,13 @@ public class Boss_enemy_core : MonoBehaviour
             // 피격시 체력 소모 
             m_hp -= 0.05f;
             hp_bar_image.fillAmount = m_hp;
-            UI_manager.instance.boss_hp_obj.SetActive(true);
+            UI_manager.inst.bossHpObj.SetActive(true);
 
             // 플레이어 총알일 시
             Player_bullet bullet = collision.GetComponent<Player_bullet>();
             
             if (bullet)
-                Object_pooling_manager.instance.Remove_obj(bullet.GetType(), bullet.transform);
+                ObjectPoolingManager.inst.RemoveObj(bullet.GetType(), bullet.transform);
 
             // 사망
             if (m_hp <= 0f)
@@ -90,7 +90,7 @@ public class Boss_enemy_core : MonoBehaviour
         if (m_current_hp_bar_time > m_max_hp_bar_time)
         {
             m_current_hp_bar_time = 0f;
-            UI_manager.instance.boss_hp_obj.SetActive(false);
+            UI_manager.inst.bossHpObj.SetActive(false);
         }
     }
 
@@ -109,7 +109,7 @@ public class Boss_enemy_core : MonoBehaviour
     public void End_pattern()
     {
         // 패턴 종료
-        if (m_pattern_type == e_boss_pattern_type.MAX)
+        if (m_pattern_type == EBossPatternType.MAX)
             return;
 
         m_is_ready = true;
@@ -119,8 +119,8 @@ public class Boss_enemy_core : MonoBehaviour
     // 죽으면 안내 후 hp바 제거
     void Dead()
     {
-        UI_manager.instance.Set_alert_text(e_level_type.END);
-        UI_manager.instance.boss_hp_obj.SetActive(false);
+        UI_manager.inst.SetAlertMsg(ELevelType.END);
+        UI_manager.inst.bossHpObj.SetActive(false);
         Destroy(gameObject);
     }
 }

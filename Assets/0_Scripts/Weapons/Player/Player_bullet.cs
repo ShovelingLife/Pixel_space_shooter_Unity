@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_bullet : MonoBehaviour
 {
     // 플레이어 총알 관련
-    public Player_bullet_data player_bullet_data;
+    public PlayerBulletData player_bullet_data;
 
     void Start()
     {
@@ -14,7 +14,7 @@ public class Player_bullet : MonoBehaviour
 
     void Update()
     {
-        this.transform.Translate(Vector2.up * player_bullet_data.bullet_speed * Time.deltaTime);
+        this.transform.Translate(Vector2.up * player_bullet_data.speed * Time.deltaTime);
     }
 
     // 충돌시 총알 반환
@@ -22,6 +22,6 @@ public class Player_bullet : MonoBehaviour
     {
         if (other.gameObject.tag == "Wall" ||
             other.gameObject.tag == "Enemy")
-            Object_pooling_manager.instance.Remove_obj(typeof(Player_bullet), transform);
+            ObjectPoolingManager.inst.RemoveObj(typeof(Player_bullet), transform);
     }
 }

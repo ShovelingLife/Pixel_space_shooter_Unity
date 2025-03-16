@@ -21,12 +21,12 @@ public class Boss_bullet_type1 : MonoBehaviour
         Boss_enemy_core boss_enemy_core = transform.parent.GetComponent<Boss_enemy_core>();
 
         if (collision.tag == "Wall")
-            Object_pooling_manager.instance.Remove_obj(typeof(Boss_bullet_type1), transform);
+            ObjectPoolingManager.inst.RemoveObj(typeof(Boss_bullet_type1), transform);
 
         else if (collision.tag == "Player")
         {
-            collision.GetComponent<Player_manager>().current_hp_prop -= 2f;
-            Object_pooling_manager.instance.Remove_obj(typeof(Boss_bullet_type1), transform);
+            collision.GetComponent<PlayerManager>().CurHp -= 2f;
+            ObjectPoolingManager.inst.RemoveObj(typeof(Boss_bullet_type1), transform);
         }
     }
 

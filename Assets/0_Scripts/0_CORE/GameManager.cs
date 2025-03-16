@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     // 초기화
     private void Init()
     {
-        Global.Init_arr_power_up_pos();
-        Enemy_info_manager.instance.Init(); // 경로
-        UI_manager.instance.Init(); // UI
-        Level_manager.instance.Init(); // 레벨 
+        Utility.InitPowerUpPos();
+        EnemyInfoManager.inst.Init(); // 경로
+        UI_manager.inst.Init(); // UI
+        LevelManager.inst.Init(); // 레벨 
     }
 }
